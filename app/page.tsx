@@ -160,6 +160,7 @@ export default function GnsysLanding() {
               {features.map((f) => {
                 const isProteccion = f.title === "Protección de Datos";
                 const isCloud = f.title === "Cloud";
+                const isInfraestructura = f.title === "Infraestructura";
                 const cardContent = (
                   <Card
                     className="
@@ -210,6 +211,19 @@ export default function GnsysLanding() {
                       key={f.title}
                       href="/cloud"
                       aria-label="Servicios Cloud - Gnsys"
+                      className="block"
+                    >
+                      {cardContent}
+                    </Link>
+                  );
+                }
+
+                if (isInfraestructura) {
+                  return (
+                    <Link
+                      key={f.title}
+                      href="/infraestructura"
+                      aria-label="Infraestructura - Gnsys"
                       className="block"
                     >
                       {cardContent}
