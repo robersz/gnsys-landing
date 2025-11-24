@@ -56,7 +56,7 @@ export default function GnsysLanding() {
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       {/* Navbar */}
-      <header className="sticky top-0 z-30 backdrop-blur bg-gray-900/90 text-white border-b border-blue-800">
+      <header className="sticky top-0 z-30 backdrop-blur bg-gray-900/90 text-white border-b border-grey-800">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex items-center">
