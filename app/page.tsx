@@ -13,6 +13,7 @@ import {
   ArrowRight,
   Sparkles,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function GnsysLanding() {
   const features = [
@@ -158,6 +159,7 @@ export default function GnsysLanding() {
             <div className="grid grid-cols-2 gap-4">
               {features.map((f) => {
                 const isProteccion = f.title === "Protección de Datos";
+                const isCloud = f.title === "Cloud";
                 const cardContent = (
                   <Card
                     className="
@@ -199,6 +201,19 @@ export default function GnsysLanding() {
                     >
                       {cardContent}
                     </a>
+                  );
+                }
+
+                if (isCloud) {
+                  return (
+                    <Link
+                      key={f.title}
+                      href="/cloud"
+                      aria-label="Servicios Cloud - Gnsys"
+                      className="block"
+                    >
+                      {cardContent}
+                    </Link>
                   );
                 }
 
