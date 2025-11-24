@@ -18,6 +18,13 @@ import Link from "next/link";
 export default function GnsysLanding() {
   const features = [
     {
+      icon: <Server className="h-5 w-5 text-neutral-800" />,
+      title: "Infraestructura",
+      body:
+        "Servidores, almacenamiento y networking con Lenovo, IBM, HPE. Sizing, instalación y soporte.",
+      image: "/infrastructure.png",
+    },
+    {
       icon: <Cloud className="h-5 w-5 text-neutral-800" />,
       title: "Cloud",
       body:
@@ -43,13 +50,6 @@ export default function GnsysLanding() {
       body:
         "Diseño y operación de respaldos con Veeam, políticas 3-2-1-1-0 y pruebas de recuperación.",
       image: "/protect.png",
-    },
-    {
-      icon: <Server className="h-5 w-5 text-neutral-800" />,
-      title: "Infraestructura",
-      body:
-        "Servidores, almacenamiento y networking con Lenovo, IBM, HPE. Sizing, instalación y soporte.",
-      image: "/infrastructure.png",
     },
   ];
 
@@ -95,7 +95,8 @@ export default function GnsysLanding() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="bg-blue-800 hover:bg-blue-700 rounded-sm" size="sm">
+            <Button className="flex items-center gap-2 bg-blue-800 hover:bg-blue-700 rounded-sm" size="sm">
+              <Image src="/whatsapp32.png" alt="WhatsApp" width={20} height={20} className="inline-block" />
               Hablemos
             </Button>
           </a>
@@ -272,18 +273,54 @@ export default function GnsysLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t bg-blue-900 text-white">
-        <div className="mx-auto max-w-7xl px-4 py-10 grid md:grid-cols-2 gap-6 items-center">
+      <footer className="border-t bg-gray-900/90 text-white border-gray-800">
+        <div className="mx-auto max-w-7xl px-4 pr-8 py-6 flex items-center justify-between">
           <div className="text-sm">© {new Date().getFullYear()} Gnsys. Todos los derechos reservados.</div>
-          <div className="flex gap-4 justify-start md:justify-end text-sm">
-            <a href="#" className="hover:underline">
-              Aviso de privacidad
+
+          <div className="flex items-center gap-4">
+            <a
+              href="https://www.facebook.com/GNSYSINF"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Gnsys en Facebook"
+            >
+              <Image
+                src="/facebook48.png"
+                alt="Facebook"
+                width={32}
+                height={32}
+                className="inline-block opacity-90 hover:opacity-100"
+              />
             </a>
-            <a href="#" className="hover:underline">
-              Términos
+
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Gnsys en Instagram"
+            >
+              <Image
+                src="/instagram48.png"
+                alt="Instagram"
+                width={32}
+                height={32}
+                className="inline-block opacity-90 hover:opacity-100"
+              />
             </a>
-            <a href="#contacto" className="hover:underline">
-              Contacto
+
+            <a
+              href="https://www.linkedin.com/company/gnsys-informatica-sa-de-cv/?originalSubdomain=mx"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Gnsys en LinkedIn"
+            >
+              <Image
+                src="/linkedin48.png"
+                alt="LinkedIn"
+                width={32}
+                height={32}
+                className="inline-block opacity-90 hover:opacity-100"
+              />
             </a>
           </div>
         </div>
