@@ -161,7 +161,8 @@ export default function GnsysLanding() {
                 const isProteccion = f.title === "Protección de Datos";
                 const isCloud = f.title === "Cloud";
                 const isInfraestructura = f.title === "Infraestructura";
-                const isAI = f.title === "Inteligencia Artificial"; // <-- added
+                const isAI = f.title === "Inteligencia Artificial";
+                const isVirtualizacion = f.title === "Virtualización"; // <-- agregado
 
                 const cardContent = (
                   <Card
@@ -226,6 +227,19 @@ export default function GnsysLanding() {
                       key={f.title}
                       href="/ai"
                       aria-label="Inteligencia Artificial - Gnsys"
+                      className="block"
+                    >
+                      {cardContent}
+                    </Link>
+                  );
+                }
+
+                if (isVirtualizacion) {
+                  return (
+                    <Link
+                      key={f.title}
+                      href="/virtualizacion"
+                      aria-label="Virtualización - Gnsys"
                       className="block"
                     >
                       {cardContent}
