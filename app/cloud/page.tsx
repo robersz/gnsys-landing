@@ -26,7 +26,7 @@ export default function CloudPage() {
 
           <div className="mt-8 flex gap-3">
             <Link
-              href="mailto:contacto@gnsys.com.mx?subject=Consulta%20sobre%20servicios%20Cloud"
+              href="mailto:ventas@gnsys.com.mx?subject=Consulta%20sobre%20servicios%20Cloud"
             >
               <Button
                 size="lg"
@@ -40,7 +40,7 @@ export default function CloudPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white text-white hover:bg-white/20 rounded-sm"
+                className="bg-white text-blue-900 hover:bg-blue-100 rounded-sm"
               >
                 Volver al inicio <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -171,7 +171,7 @@ export default function CloudPage() {
         </p>
 
         <Link
-          href="mailto:contacto@gnsys.com.mx?subject=Consulta%20sobre%20servicios%20Cloud"
+          href="mailto:ventas@gnsys.com.mx?subject=Consulta%20sobre%20servicios%20Cloud"
         >
           <Button className="bg-white text-blue-900 hover:bg-blue-100 rounded-sm">
             Hablar con un consultor
