@@ -34,7 +34,7 @@ export default function GnsysLanding() {
       title: "Inteligencia Artificial",
       body:
         "Automatizamos procesos, copilotos y analítica aplicada al negocio con enfoque pragmático y ROI medible.",
-      image: "/ai.png",
+      image: "/AI.png",
     },
     {
       icon: <ShieldCheck className="h-5 w-5 text-neutral-800" />,
