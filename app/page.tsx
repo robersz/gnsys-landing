@@ -56,7 +56,7 @@ export default function GnsysLanding() {
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       {/* Navbar */}
-      <header className="sticky top-0 z-30 backdrop-blur bg-blue-900/90 text-white border-b border-blue-800">
+      <header className="sticky top-0 z-30 backdrop-blur bg-gray-900/90 text-white border-b border-blue-800">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex items-center">
@@ -161,6 +161,8 @@ export default function GnsysLanding() {
                 const isProteccion = f.title === "Protección de Datos";
                 const isCloud = f.title === "Cloud";
                 const isInfraestructura = f.title === "Infraestructura";
+                const isAI = f.title === "Inteligencia Artificial"; // <-- added
+
                 const cardContent = (
                   <Card
                     className="
@@ -211,6 +213,19 @@ export default function GnsysLanding() {
                       key={f.title}
                       href="/cloud"
                       aria-label="Servicios Cloud - Gnsys"
+                      className="block"
+                    >
+                      {cardContent}
+                    </Link>
+                  );
+                }
+
+                if (isAI) {
+                  return (
+                    <Link
+                      key={f.title}
+                      href="/ai"
+                      aria-label="Inteligencia Artificial - Gnsys"
                       className="block"
                     >
                       {cardContent}

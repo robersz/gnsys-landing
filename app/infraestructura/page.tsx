@@ -50,7 +50,7 @@ export default function InfraestructuraPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white text-white hover:bg-white/20 rounded-sm"
+                className="bg-white text-blue-900 hover:bg-blue-100 rounded-sm"
               >
                 Volver al inicio <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -249,7 +249,7 @@ export default function InfraestructuraPage() {
         <div className="flex flex-wrap gap-4 justify-center">
           <Link href="mailto:ventas@gnsys.com.mx?subject=Consulta%20sobre%20Infraestructura%20Gnsys">
             <Button className="bg-white text-blue-900 hover:bg-blue-100 rounded-sm">
-              Escribir a ventas@gnsys.com.mx
+              Contactar a un consultor
             </Button>
           </Link>
 
@@ -260,7 +260,7 @@ export default function InfraestructuraPage() {
           >
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-white/10 rounded-sm"
+              className="bg-white text-blue-900 hover:bg-green-100 rounded-sm"
             >
               Contactar por WhatsApp
             </Button>
