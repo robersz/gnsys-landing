@@ -74,18 +74,18 @@ export default function GnsysLanding() {
             </Badge>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#servicios" className="hover:text-blue-300">
+            <Link href="/servicios" className="hover:text-blue-300">
               Servicios
-            </a>
+            </Link>
             <Link href="/alianzas" className="hover:text-blue-300">
               Alianzas
             </Link>
             <Link href="/clientes" className="hover:text-blue-300">
               Clientes
             </Link>
-            <a href="#contacto" className="hover:text-blue-300">
+            <Link href="/contacto" className="hover:text-blue-300">
               Contacto
-            </a>
+            </Link>
           </nav>
           <a
             href="https://wa.me/528119086025?text=Hola%2C%20me%20gustar%C3%ADa%20hablar%20con%20el%20equipo%20de%20Gnsys."
