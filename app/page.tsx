@@ -87,6 +87,32 @@ export default function GnsysLanding() {
               Contacto
             </Link>
           </nav>
+          <nav className="flex md:hidden items-center gap-3 text-sm overflow-x-auto px-1 py-1">
+            <Link
+              href="/servicios"
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 hover:text-blue-300 whitespace-nowrap"
+            >
+              Servicios
+            </Link>
+            <Link
+              href="/alianzas"
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 hover:text-blue-300 whitespace-nowrap"
+            >
+              Alianzas
+            </Link>
+            <Link
+              href="/clientes"
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 hover:text-blue-300 whitespace-nowrap"
+            >
+              Clientes
+            </Link>
+            <Link
+              href="/contacto"
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 hover:text-blue-300 whitespace-nowrap"
+            >
+              Contacto
+            </Link>
+          </nav>
           <a
             href="https://wa.me/528119086025?text=Hola%2C%20me%20gustar%C3%ADa%20hablar%20con%20el%20equipo%20de%20Gnsys."
             target="_blank"
