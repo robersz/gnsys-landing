@@ -80,9 +80,9 @@ export default function GnsysLanding() {
             <Link href="/alianzas" className="hover:text-blue-300">
               Alianzas
             </Link>
-            <a href="#clientes" className="hover:text-blue-300">
+            <Link href="/clientes" className="hover:text-blue-300">
               Clientes
-            </a>
+            </Link>
             <a href="#contacto" className="hover:text-blue-300">
               Contacto
             </a>
