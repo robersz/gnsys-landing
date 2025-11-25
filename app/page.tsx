@@ -77,14 +77,11 @@ export default function GnsysLanding() {
             <a href="#servicios" className="hover:text-blue-300">
               Servicios
             </a>
-            <a href="#metodo" className="hover:text-blue-300">
-              Método
-            </a>
-            <a href="#partners" className="hover:text-blue-300">
+            <Link href="/alianzas" className="hover:text-blue-300">
               Alianzas
-            </a>
-            <a href="#casos" className="hover:text-blue-300">
-              Casos
+            </Link>
+            <a href="#clientes" className="hover:text-blue-300">
+              Clientes
             </a>
             <a href="#contacto" className="hover:text-blue-300">
               Contacto
@@ -294,7 +291,7 @@ export default function GnsysLanding() {
             </a>
 
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/gnsys_inf?igsh=Ym9mMTNoY2J0dWNv"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Gnsys en Instagram"
