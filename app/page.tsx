@@ -57,7 +57,7 @@ export default function GnsysLanding() {
     <div className="min-h-screen bg-white text-neutral-900">
       {/* Navbar */}
       <header className="sticky top-0 z-30 backdrop-blur bg-gray-900/90 text-white border-b border-grey-800">
-        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+        <div className="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <div className="flex items-center">
               <Image
@@ -95,7 +95,7 @@ export default function GnsysLanding() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="flex items-center gap-2 bg-blue-800 hover:bg-blue-700 rounded-sm" size="sm">
+            <Button className="flex items-center gap-2 bg-blue-800 hover:bg-blue-700 rounded-sm w-full sm:w-auto" size="sm">
               <Image src="/whatsapp32.png" alt="WhatsApp" width={20} height={20} className="inline-block" />
               Hablemos
             </Button>
@@ -127,12 +127,12 @@ export default function GnsysLanding() {
               para mejorar disponibilidad, seguridad y toma de decisiones basada en
               información.
             </p>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href="mailto:ventas@gnsys.com.mx?subject=Solicitud%20de%20llamada%20-%20Gnsys&body=Hola%2C%0D%0AMe%20gustar%C3%ADa%20agendar%20una%20llamada%20para%20conocer%20m%C3%A1s%20sobre%20sus%20servicios.%0D%0A%0D%0ANombre%3A%20%0DEmpresa%3A%20%0DCorreo%3A%20%0DTel%C3%A9fono%3A%20%0D%0AHorario%20preferido%3A%20%0D%0A%0D%0AGracias."
               >
                 <Button
-                  className="bg-blue-900 hover:bg-blue-800 rounded-sm"
+                  className="bg-blue-900 hover:bg-blue-800 rounded-sm w-full sm:w-auto"
                   size="lg"
                 >
                   Agenda una llamada
@@ -145,7 +145,7 @@ export default function GnsysLanding() {
               >
                 <Button
                   variant="outline"
-                  className="rounded-sm border-gray-300 text-neutral-900 hover:bg-gray-50"
+                  className="rounded-sm border-gray-300 text-neutral-900 hover:bg-gray-50 w-full sm:w-auto"
                   size="lg"
                 >
                   Descargar Portafolio
@@ -157,7 +157,7 @@ export default function GnsysLanding() {
 
           {/* Right column: features grid */}
           <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {features.map((f) => {
                 const isProteccion = f.title === "Protección de Datos";
                 const isCloud = f.title === "Cloud";
@@ -180,7 +180,7 @@ export default function GnsysLanding() {
                         alt={f.title}
                         width={600}
                         height={350}
-                        className="w-full h-36 object-cover"
+                        className="w-full h-44 sm:h-36 object-cover"
                       />
                     )}
                     <CardHeader>
@@ -274,10 +274,10 @@ export default function GnsysLanding() {
 
       {/* Footer */}
       <footer className="border-t bg-gray-900/90 text-white border-gray-800">
-        <div className="mx-auto max-w-7xl px-4 pr-8 py-6 flex items-center justify-between">
+        <div className="mx-auto max-w-7xl px-4 pr-8 py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-center sm:text-left">
           <div className="text-sm">© {new Date().getFullYear()} Gnsys. Todos los derechos reservados.</div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center gap-4 sm:justify-end">
             <a
               href="https://www.facebook.com/GNSYSINF"
               target="_blank"
