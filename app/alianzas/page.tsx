@@ -4,7 +4,7 @@ const partners = [
   { name: "IBM", slug: "ibm" },
   { name: "Lenovo", slug: "lenovo" },
   { name: "VMware", slug: "vmware" },
-  { name: "Red Hat", slug: "redhat" },
+  { name: "Red Hat", slug: "redhat1" },
   { name: "AWS", slug: "aws" },
   { name: "Microsoft", slug: "microsoft" },
   { name: "Nutanix", slug: "nutanix" },
