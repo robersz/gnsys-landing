@@ -83,6 +83,9 @@ export default function GnsysLanding() {
             <Link href="/clientes" className="hover:text-blue-300">
               Clientes
             </Link>
+            <Link href="/nosotros" className="hover:text-blue-300">
+              Nosotros
+            </Link>
             <Link href="/contacto" className="hover:text-blue-300">
               Contacto
             </Link>
@@ -105,6 +108,12 @@ export default function GnsysLanding() {
               className="rounded-full border border-white/15 bg-white/5 px-3 py-1 hover:text-blue-300 whitespace-nowrap"
             >
               Clientes
+            </Link>
+            <Link
+              href="/nosotros"
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 hover:text-blue-300 whitespace-nowrap"
+            >
+              Nosotros
             </Link>
             <Link
               href="/contacto"
