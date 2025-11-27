@@ -60,81 +60,26 @@ export default function ContactoPage() {
 
       <section className="mt-16 border border-slate-200 rounded-xl shadow-sm p-8 bg-white">
         <h2 className="text-2xl font-semibold text-slate-900 mb-3">
-          Envíanos un mensaje
+          ¿Prefieres hablar directamente?
         </h2>
         <p className="text-slate-600 mb-8">
-          Completa el siguiente formulario y nuestro equipo comercial se pondrá en contacto contigo a la brevedad.
+          Ponte en contacto con nuestro equipo comercial por correo o teléfono y cuéntanos sobre tu proyecto.
         </p>
 
-        <form
-          action="https://formsubmit.co/ventas@gnsys.com.mx"
-          method="POST"
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2"
-        >
-          <div className="flex flex-col gap-2">
-            <label htmlFor="nombre" className="text-sm font-medium text-slate-700">
-              Nombre completo
-            </label>
-            <input
-              id="nombre"
-              name="name"
-              type="text"
-              required
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-              placeholder="Tu nombre"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-sm font-medium text-slate-700">
-              Correo electrónico
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-              placeholder="nombre@empresa.com"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="telefono" className="text-sm font-medium text-slate-700">
-              Teléfono
-            </label>
-            <input
-              id="telefono"
-              name="phone"
-              type="tel"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-              placeholder="(81) 0000 0000"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2 sm:col-span-2">
-            <label htmlFor="mensaje" className="text-sm font-medium text-slate-700">
-              Mensaje
-            </label>
-            <textarea
-              id="mensaje"
-              name="message"
-              rows={5}
-              required
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-              placeholder="Cuéntanos sobre tu proyecto o necesidades tecnológicas"
-            ></textarea>
-          </div>
-
-          <div className="sm:col-span-2">
-            <button
-              type="submit"
-              className="w-full sm:w-auto inline-flex items-center justify-center rounded-lg bg-sky-600 px-6 py-3 text-white font-semibold shadow hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-            >
-              Enviar mensaje
-            </button>
-          </div>
-        </form>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a
+            href="mailto:ventas@gnsys.com.mx"
+            className="inline-flex items-center justify-center rounded-lg bg-sky-600 px-6 py-3 text-white font-semibold shadow hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+          >
+            Escríbenos a ventas@gnsys.com.mx
+          </a>
+          <a
+            href="tel:+528183477640"
+            className="inline-flex items-center justify-center rounded-lg border border-sky-600 px-6 py-3 text-sky-700 font-semibold hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+          >
+            Llámanos al 81 8347 7640
+          </a>
+        </div>
       </section>
     </main>
   );
