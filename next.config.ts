@@ -14,7 +14,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   `script-src 'self' 'unsafe-inline'${isProduction ? "" : " 'unsafe-eval'"}`,
   "connect-src 'self'",
-  "frame-src https://www.google.com https://maps.google.com https://maps.gstatic.com",
+  "frame-src https://www.google.com https://maps.google.com https://maps.gstatic.com https://maps.googleapis.com",
   isProduction ? "upgrade-insecure-requests" : null,
 ]
   .filter(Boolean)
