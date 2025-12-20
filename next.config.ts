@@ -8,7 +8,7 @@ const contentSecurityPolicy = [
   "form-action 'self'",
   "frame-ancestors 'self'",
   "object-src 'none'",
-  "img-src 'self' data: https:",
+  "img-src 'self' data: https://*.googleapis.com https://*.gstatic.com https://www.google.com https://maps.google.com https://maps.gstatic.com",
   "font-src 'self' data:",
   // TODO: Replace unsafe-inline with nonces once a CSP nonce strategy is in place.
   "style-src 'self' 'unsafe-inline'",
