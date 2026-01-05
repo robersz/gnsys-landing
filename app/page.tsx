@@ -149,7 +149,7 @@ export default function GnsysLanding() {
               priority
             />
             <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 text-xs mb-4 bg-gray-50 text-neutral-900">
-              <Sparkles className="h-3.5 w-3.5" /> Nueva propuesta 2025
+              <Sparkles className="h-3.5 w-3.5" /> Nueva propuesta 2026
             </div>
             <h1 className="text-3xl md:text-5xl font-semibold leading-tight tracking-tight text-neutral-900">
               Infraestructura sólida. Datos confiables. Decisiones inteligentes.
