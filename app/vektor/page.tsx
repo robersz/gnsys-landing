@@ -138,61 +138,59 @@ export default function VektorPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {newsletters.map((newsletter) => (
               <Card key={newsletter.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <CardHeader className="bg-gradient-to-br from-blue-50 to-gray-50">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge className="bg-blue-900 text-white">
-                      Edición {newsletter.id}
-                    </Badge>
-                    <div className="flex items-center gap-1 text-sm text-neutral-600">
-                      <Calendar className="h-4 w-4" />
-                      <span>{newsletter.date}</span>
+                <Link href={`/vektor/${newsletter.id}`}>
+                  <CardHeader className="bg-gradient-to-br from-blue-50 to-gray-50 cursor-pointer hover:from-blue-100 hover:to-gray-100 transition-colors">
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge className="bg-blue-900 text-white">
+                        Edición {newsletter.id}
+                      </Badge>
+                      <div className="flex items-center gap-1 text-sm text-neutral-600">
+                        <Calendar className="h-4 w-4" />
+                        <span>{newsletter.date}</span>
+                      </div>
                     </div>
-                  </div>
-                  <CardTitle className="text-xl text-neutral-900">
-                    {newsletter.title}
-                  </CardTitle>
-                </CardHeader>
+                    <CardTitle className="text-xl text-neutral-900">
+                      {newsletter.title}
+                    </CardTitle>
+                  </CardHeader>
+                </Link>
                 <CardContent className="p-6">
                   {/* PDF Preview Thumbnail */}
-                  <div className="mb-4 aspect-[3/4] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden border border-gray-300">
-                    {newsletter.coverImage ? (
-                      <Image
-                        src={newsletter.coverImage}
-                        alt={`Vektor ${newsletter.title}`}
-                        width={400}
-                        height={533}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <FileText className="h-20 w-20 text-gray-400" />
-                      </div>
-                    )}
-                  </div>
+                  <Link href={`/vektor/${newsletter.id}`}>
+                    <div className="mb-4 aspect-[3/4] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden border border-gray-300 cursor-pointer hover:opacity-90 transition-opacity">
+                      {newsletter.coverImage ? (
+                        <Image
+                          src={newsletter.coverImage}
+                          alt={`Vektor ${newsletter.title}`}
+                          width={400}
+                          height={533}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <FileText className="h-20 w-20 text-gray-400" />
+                        </div>
+                      )}
+                    </div>
+                  </Link>
                   
                   <p className="text-sm text-neutral-600 mb-6">
                     {newsletter.description}
                   </p>
                   
                   <div className="flex gap-3">
-                    <a
-                      href={newsletter.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1"
-                    >
-                      <Button className="w-full bg-blue-800 hover:bg-blue-700 flex items-center justify-center gap-2">
-                        <Download className="h-4 w-4" />
-                        Descargar PDF
+                    <Link href={`/vektor/${newsletter.id}`} className="flex-1">
+                      <Button className="w-full bg-blue-800 hover:bg-blue-700">
+                        Ver edición
                       </Button>
-                    </a>
+                    </Link>
                     <a
                       href={newsletter.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      download
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <Button variant="outline" className="border-blue-800 text-blue-800 hover:bg-blue-50">
-                        Ver
+                        <Download className="h-4 w-4" />
                       </Button>
                     </a>
                   </div>
@@ -224,11 +222,11 @@ export default function VektorPage() {
           <p className="text-lg text-blue-100 mb-8">
             Suscríbete para recibir las últimas actualizaciones directamente en tu correo
           </p>
-          <Link href="/contacto">
+          <a href="mailto:info@gnsys.com.mx?subject=Suscripción%20a%20Vektor&body=Hola%2C%0A%0AMe%20gustaría%20suscribirme%20al%20boletín%20mensual%20Vektor.%0A%0ANombre%3A%20%0AEmpresa%3A%20%0ACorreo%3A%20%0A%0AGracias">
             <Button className="bg-white text-blue-900 hover:bg-gray-100 text-lg px-8 py-6">
               Suscribirse al boletín
             </Button>
-          </Link>
+          </a>
         </div>
       </section>
     </div>
