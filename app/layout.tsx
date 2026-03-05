@@ -14,8 +14,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gnsys.com.mx"),
   title: "Gnsys Informática",
   description: "Consultores en Tecnología",
+  openGraph: {
+    title: "Gnsys Informática",
+    description: "Consultores en Tecnología",
+    url: "https://gnsys.com.mx",
+    siteName: "Gnsys Informática",
+    images: [
+      {
+        url: "/hero-gnsys.png",
+        width: 1200,
+        height: 630,
+        alt: "Gnsys Informática",
+      },
+    ],
+    locale: "es_MX",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gnsys Informática",
+    description: "Consultores en Tecnología",
+    images: ["/hero-gnsys.png"],
+  },
   icons: {
     icon: "/gnsys-icon.png",
   },
