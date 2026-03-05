@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download, ArrowLeft, Share2, Calendar } from "lucide-react";
+import { Download, ArrowLeft, Share2, Calendar, FileText } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -14,8 +14,16 @@ const newslettersData: Record<string, {
   date: string;
   description: string;
   pdfUrl: string;
-  coverImage: string;
+  coverImage?: string;
 }> = {
+  "2602": {
+    id: "2602",
+    title: "Febrero 2026",
+    date: "Febrero 2026",
+    description: "Segunda edición de Vektor con novedades tecnológicas, recomendaciones prácticas y noticias clave para infraestructura y transformación digital.",
+    pdfUrl: "/vektor/2602-Vektor.pdf",
+    coverImage: "/vektor/2602-Vektor.png",
+  },
   "2601": {
     id: "2601",
     title: "Enero 2026",
@@ -143,6 +151,7 @@ export default function NewsletterDetailPage() {
             <div className="sticky top-24">
               <div className="overflow-hidden rounded-lg shadow-lg">
                 <div className="aspect-[3/4] bg-gradient-to-br from-gray-100 to-gray-200">
+                  {newsletter.coverImage ? (
                     <Image
                       src={newsletter.coverImage}
                       alt={`Vektor ${newsletter.title}`}
@@ -150,6 +159,11 @@ export default function NewsletterDetailPage() {
                       height={800}
                       className="w-full h-full object-cover"
                     />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <FileText className="h-20 w-20 text-gray-400" />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

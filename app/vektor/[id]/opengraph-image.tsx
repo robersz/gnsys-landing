@@ -13,6 +13,7 @@ export default async function Image({ params }: { params: { id: string } }) {
   
   // Newsletter data mapping
   const newsletterTitles: Record<string, string> = {
+    "2602": "Febrero 2026",
     "2601": "Enero 2026",
     // Add more as needed
   };

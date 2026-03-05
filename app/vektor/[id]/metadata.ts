@@ -10,8 +10,16 @@ const newslettersData: Record<string, {
   date: string;
   description: string;
   pdfUrl: string;
-  coverImage: string;
+  coverImage?: string;
 }> = {
+  "2602": {
+    id: "2602",
+    title: "Febrero 2026",
+    date: "Febrero 2026",
+    description: "Segunda edición de Vektor con novedades tecnológicas, recomendaciones prácticas y noticias clave para infraestructura y transformación digital.",
+    pdfUrl: "/vektor/2602-Vektor.pdf",
+    coverImage: "/vektor/2602-Vektor.png",
+  },
   "2601": {
     id: "2601",
     title: "Enero 2026",
@@ -33,7 +41,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = `Vektor ${newsletter.title} - Gnsys`;
   const description = newsletter.description;
-  const imageUrl = `https://gnsys.com.mx${newsletter.coverImage}`; // Update with your actual domain
+  const imageUrl = newsletter.coverImage
+    ? `https://gnsys.com.mx${newsletter.coverImage}`
+    : `https://gnsys.com.mx/vektor/${newsletter.id}/opengraph-image`;
 
   return {
     title,

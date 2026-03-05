@@ -11,6 +11,14 @@ export default function VektorPage() {
   // Newsletter issues data
   const newsletters = [
     {
+      id: "2602",
+      title: "Febrero 2026",
+      date: "Febrero 2026",
+      description: "Segunda edición de Vektor con novedades tecnológicas, recomendaciones prácticas y noticias clave para infraestructura y transformación digital.",
+      pdfUrl: "/vektor/2602-Vektor.pdf",
+      coverImage: "/vektor/2602-Vektor.png",
+    },
+    {
       id: "2601",
       title: "Enero 2026",
       date: "Enero 2026",
