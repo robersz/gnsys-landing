@@ -12,6 +12,10 @@ import {
   Boxes,
   ArrowRight,
   Sparkles,
+  CalendarDays,
+  MapPin,
+  Clock3,
+  Megaphone,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -143,6 +147,41 @@ export default function GnsysLanding() {
           </a>
         </div>
       </header>
+
+      <section className="border-b border-blue-500 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white">
+        <div className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="space-y-2">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-blue-100">
+              <Megaphone className="h-4 w-4" />
+              Gnsys te invita al evento IBM Flashsystem Monterrey 2026
+            </p>
+            <p className="text-lg md:text-xl font-semibold leading-tight">
+              Invitación exclusiva · 23 Abril 2026 · Signature Room
+            </p>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-blue-100">
+              <span className="inline-flex items-center gap-1.5">
+                <MapPin className="h-4 w-4" />
+                Torre Helicon, Monterrey, México
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Clock3 className="h-4 w-4" />
+                18:00 a 22:00 Hrs
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <CalendarDays className="h-4 w-4" />
+                Jueves 23 de Abril 2026
+              </span>
+            </div>
+          </div>
+
+          <a href="/invitacion-23-abril-2026/index.html" className="w-full lg:w-auto">
+            <Button className="bg-white text-blue-900 hover:bg-blue-50 rounded-sm w-full lg:w-auto" size="sm">
+              Ver landing del evento
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </a>
+        </div>
+      </section>
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-100">

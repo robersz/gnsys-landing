@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html <html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+      Storage Roadshow - La Nueva Era del Almacenamiento Inteligente
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+
+    <style>
+
+      :root {
+          --primar-dark-color: #051A27;
+          --primary-color: #325CF0;
+          --primary-mint: #7CE2D7;
+          --secondary-color: #6c757d;
+          --background-color-second: #122D3F;
+          --text-color: #FFFFFF;
+          --font-family: 'Inter', sans-serif;
+
+          --padding-page: 80px;
+          --padding-page-sm: 24px;
+        }
+
+        @font-face {
+          font-family: 'Inter';
+          src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        }
+
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          font-family: 'Inter', sans-serif;
+        }
+
+        body {
+          background-color: var(--primar-dark-color);
+          color: var(--text-color);
+          overflow: hidden auto;
+        }
+
+
+        /* Hero Section */
+        .hero {
+          width: 100%;
+          padding: var(--padding-page);
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          height: 100vh;
+          background-color: var(--primar-dark-color);
+          color: #fff;
+          text-align: left;
+        }
+
+        .hero__container {
+          width: 100%;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 20px;
+          position: relative;
+          z-index: 1;
+        }
+        .hero__bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 0;
+          opacity: 0.2;
+        }
+
+        .hero__container img {
+          width: 160px;
+          height: auto;
+        }
+
+        .hero__container h1 {
+          font-size: 2.5rem;
+          font-weight: 700;
+        }
+
+        .hero__container p {
+          font-size: 1.25rem;
+          color: var(--primary-color);
+        }
+
+        .hero__container a {
+          font-size: 1.2rem;
+          font-weight: 800;
+          display: inline-block;
+          padding: 10px 40px;
+          background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-mint) 100%);
+          color: #fff;
+          text-decoration: none;
+          transition: background-color 0.3s ease;
+        }
+
+        /* About Section */
+        .about {
+          padding: var(--padding-page);
+          color: var(--text-color);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 40px;
+          text-align: center;
+        }
+
+        .about span {
+          font-size: 2.5rem;
+          font-weight: 600;
+          color: var(--primary-color);
+        } 
+
+        .about p {
+          font-size: 1rem;
+        }
+
+        .about img {
+          margin-top: 5rem;
+            width: 100%;
+            height: auto;
+            user-drag: none;
+            user-select: none;
+          }
+
+          .invite {
+            padding: var(--padding-page);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            text-align: center;
+            background-color: var(--background-color-second);
+          }
+
+          @media (max-width: 768px) {
+
+            .hero {
+              padding: var(--padding-page-sm);
+            }
+
+            .about {
+              padding: var(--padding-page-sm);
+            }
+
+            .about span {
+              font-size: 24px;
+            }
+
+            .about p {
+              font-size: 16px;
+            }
+
+            .invite {
+              padding: var(--padding-page-sm);
+            }
+
+            .frame-8 {
+              flex-direction: column;
+            }
+
+            .frame-10 {
+              flex-direction: column;
+              align-items: center;
+            }
+
+            .element-marzo-CDMX {
+              font-size: 100px;
+            }
+
+            .text-wrapper-5{
+              font-size: 32px !important;
+            }
+
+            .text-wrapper-3 {
+              font-size: 40px;
+            }
+
+            .text-wrapper-4 {
+              font-size: 40px;
+            }
+
+            .registrarse {
+				      font-size: 24px !important;
+            }
+        }
+			 .frame-8 {
+				display: flex;
+				align-items: center;
+				gap: 80px;
+				position: relative;
+				align-self: stretch;
+				width: 100%;
+				flex: 0 0 auto;
+			}
+
+			 .element-marzo-CDMX {
+				position: relative;
+				width: fit-content;
+				font-weight: 400;
+				color: #ffffff;
+				font-size: 160px;
+				text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+			}
+
+			 .span {
+				font-weight: 600;
+			}
+
+			 .text-wrapper-3 {
+				font-family: "IBM Plex Sans-Light", Helvetica;
+				font-weight: 300;
+				font-size: 60px;
+			}
+
+			 .text-wrapper-4 {
+				font-family: "IBM Plex Sans-Regular", Helvetica;
+				font-size: 60px;
+			}
+
+			 .frame-9 {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: center;
+				gap: 0px;
+				position: relative;
+				flex: 1;
+				align-self: stretch;
+				flex-grow: 1;
+			}
+
+			 .text-wrapper-5 {
+				position: relative;
+				width: 100%;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #ffffff;
+				font-size: 56px;
+				letter-spacing: 0;
+				line-height: normal;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid ;
+        border-color: transparent;
+        border-bottom-color: #405567;
+        text-align: left;
+       }
+
+			 .line {
+				position: relative;
+				align-self: stretch;
+				width: 100%;
+				height: 1px;
+				object-fit: cover;
+			}
+
+			 .frame-10 {
+				display: flex;
+				align-items: flex-start;
+				justify-content: space-between;
+				position: relative;
+				align-self: stretch;
+				width: 100%;
+				flex: 0 0 auto;
+			}
+
+			 .text-wrapper-6 {
+				position: relative;
+				width: fit-content;
+				margin-top: -1px;
+				font-family: "Inter-Regular", Helvetica;
+				font-weight: 400;
+				color: #ffffff;
+				font-size: 40px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+
+			 .frame-11 {
+				display: inline-flex;
+				flex-direction: column;
+				align-items: flex-end;
+				justify-content: center;
+				gap: 4px;
+				position: relative;
+				flex: 0 0 auto;
+			}
+
+			 .text-wrapper-7 {
+				position: relative;
+				width: fit-content;
+				margin-top: -1px;
+				font-family: "IBM Plex Sans-SemiBold", Helvetica;
+				font-weight: 600;
+				color: #3ddbd9;
+				font-size: 32px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+
+			 .text-wrapper-8 {
+				position: relative;
+				width: fit-content;
+				font-family: "IBM Plex Sans-Regular", Helvetica;
+				font-weight: 400;
+				color: #ffffffbf;
+				font-size: 24px;
+				text-align: right;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+
+			 .frame-12 {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 10px;
+				padding: 16px 32px;
+				position: relative;
+				align-self: stretch;
+				width: 100%;
+        margin-top: 2rem;
+				flex: 0 0 auto;
+				border: 1px solid;
+				border-color: transparent;
+				border-image: linear-gradient(
+						135deg,
+						rgba(50, 92, 240, 1) 0%,
+						rgba(61, 219, 217, 1) 100%
+					)
+					1;
+			}
+
+			 .location-on {
+				position: relative;
+				width: 24px;
+				height: 24px;
+				aspect-ratio: 1;
+			}
+
+			 .text-wrapper-9 {
+				position: relative;
+				width: fit-content;
+				font-family: "Inter-Bold", Helvetica;
+				font-weight: 700;
+				color: #ffffff;
+				font-size: 16px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+				text-decoration: underline;
+				white-space: nowrap;
+			}
+
+			 .registrarse-wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 10px;
+				padding: 24px 32px;
+				position: relative;
+				align-self: stretch;
+				width: 100%;
+				background: linear-gradient(
+					164deg,
+					rgba(50, 92, 240, 1) 0%,
+					rgba(124, 226, 215, 1) 100%
+				);
+			}
+
+			 .registrarse {
+				position: relative;
+				width: fit-content;
+				font-family: "Inter-Bold", Helvetica;
+				font-weight: 700;
+				color: #ffffff;
+				font-size: 60px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+        text-decoration: none;
+        transition: all 0.3s ease;
+			}
+
+      .registrarse:hover {
+        text-decoration: underline;
+      }
+
+			 .AGENDA-a-wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				gap: 40px;
+				padding: 32px 0px;
+				position: relative;
+				align-self: stretch;
+				width: 100%;
+				flex: 0 0 auto;
+			}
+
+			 .AGENDA-a {
+				position: relative;
+				width: fit-content;
+				margin-top: -1px;
+				font-family: "Inter-Bold", Helvetica;
+				font-weight: 400;
+				color: transparent;
+				font-size: 64px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+
+			 .text-wrapper-10 {
+				font-weight: 700;
+				color: #ffffff;
+			}
+
+			 .text-wrapper-11 {
+				font-family: "Inter-Medium", Helvetica;
+				font-weight: 500;
+				color: #ffffff80;
+				font-size: 24px;
+			}
+
+			 .image-3 {
+				position: relative;
+				align-self: stretch;
+				width: 100%;
+				aspect-ratio: 9.81;
+				object-fit: cover;
+			}
+
+
+      .invite__agenda {
+        width: 100%;
+        height: auto;
+        user-drag: none;
+        user-select: none;
+      }
+        
+
+    </style>
+  </head>
+  <body>
+    
+    <!-- Hero -->
+    <section
+      class="hero"
+    >
+    <img 
+      src="https://s3.us-east-1.amazonaws.com/media.storageroadshow.com/assets/ladingAssets/bg2.png"
+      alt="" 
+      class="hero__bg"
+    >
+      <div class="hero__container">
+
+
+        <img src="https://s3.us-east-1.amazonaws.com/media.storageroadshow.com/assets/ladingAssets/logos/GNSYS.png" alt="">
+        <h1>
+            La Nueva Era del Almacenamiento Inteligente
+        </h1>
+        <p>
+          Descubre las nuevas capacidades de IBM FlashSystem
+        </p>
+        <a href="https://storageroadshow.com/form/?code=mty&inv=gnsys">
+          Registrate aquí
+        </a>
+      </div>
+    </section>
+
+    <!-- About -->
+     <section class="about">
+      <span>
+      La infraestructura empresarial <br>
+      ha evolucionado, ¿La tuya está lista?
+      </span>
+      <p>
+        Descubre las nuevas capacidades de IBM FlashSystem en un evento exclusivo para líderes de tecnología.
+      </p>
+              
+      <img src="https://s3.us-east-1.amazonaws.com/media.storageroadshow.com/assets/ladingAssets/about.png" alt="">
+
+     </section>
+
+     <!-- Invite -->
+			<section class="invite" aria-label="Información del evento">
+				<div class="frame-8">
+					<p class="element-marzo-CDMX">
+						<span class="span">23<br /></span>
+						<span class="text-wrapper-3">Abril<br /></span>
+						<span class="text-wrapper-4">Monterrey</span>
+					</p>
+					<div class="frame-9">
+						<h2 class="text-wrapper-5">Signature Room, Torre Helicon</h2>
+						<img
+							class="line"
+							src="img/line-11.svg"
+							alt=""
+							role="presentation"
+						/>
+						<div class="frame-10">
+							<p class="text-wrapper-6">18:00 - 22:00 Hrs</p>
+							<div class="frame-11">
+								<p class="text-wrapper-7">Entrada Gratuita</p>
+								<p class="text-wrapper-8">Cupo limitado</p>
+							</div>
+						</div>
+						<div class="frame-12">
+							<img
+								class="location-on"
+								src="https://s3.us-east-1.amazonaws.com/media.storageroadshow.com/assets/ladingAssets/map.png"
+								alt="Icono de ubicación"
+							/>
+							<a
+								href="https://maps.app.goo.gl/RsvVLscbfT5NTp8Z8"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-wrapper-9"
+								>Ver mapa</a
+							>
+						</div>
+					</div>
+				</div>
+				<div class="registrarse-wrapper">
+					<a
+						href="https://storageroadshow.com/form/?code=mty&inv=gnsys"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="registrarse"
+						>¡Registrate ahora!</a
+					>
+				</div>
+
+        <img class="invite__agenda" src="https://s3.us-east-1.amazonaws.com/media.storageroadshow.com/assets/ladingAssets/agenda3.png" alt="agenda">
+
+			</section>
+  </body>
+</html>
