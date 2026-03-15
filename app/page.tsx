@@ -19,7 +19,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+// Banner auto-oculta después del día del evento
+const EVENT_END = new Date("2026-04-24T00:00:00-06:00");
+
 export default function GnsysLanding() {
+  const showEventBanner = new Date() < EVENT_END;
+
   const features = [
     {
       icon: <Server className="h-5 w-5 text-neutral-800" />,
@@ -105,6 +110,12 @@ export default function GnsysLanding() {
               Servicios
             </Link>
             <Link
+              href="/vektor"
+              className="rounded-full border border-blue-400 bg-blue-500/20 px-3 py-1 text-blue-400 font-semibold hover:text-blue-300 whitespace-nowrap"
+            >
+              Vektor
+            </Link>
+            <Link
               href="/alianzas"
               className="rounded-full border border-white/15 bg-white/5 px-3 py-1 hover:text-blue-300 whitespace-nowrap"
             >
@@ -121,12 +132,6 @@ export default function GnsysLanding() {
               className="rounded-full border border-white/15 bg-white/5 px-3 py-1 hover:text-blue-300 whitespace-nowrap"
             >
               Nosotros
-            </Link>
-            <Link
-              href="/vektor"
-              className="rounded-full border border-blue-400 bg-blue-500/20 px-3 py-1 text-blue-400 font-semibold hover:text-blue-300 whitespace-nowrap"
-            >
-              Vektor
             </Link>
             <Link
               href="/contacto"
@@ -148,7 +153,7 @@ export default function GnsysLanding() {
         </div>
       </header>
 
-      <section className="border-b border-blue-500 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white">
+      {showEventBanner && <section className="border-b border-blue-500 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white">
         <div className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-2">
             <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-blue-100">
@@ -181,7 +186,7 @@ export default function GnsysLanding() {
             </Button>
           </a>
         </div>
-      </section>
+      </section>}
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-100">
@@ -193,6 +198,7 @@ export default function GnsysLanding() {
               alt="Gnsys - Infraestructura y Datos"
               width={1200}
               height={300}
+              sizes="100vw"
               className="w-full h-40 md:h-56 object-cover"
               priority
             />
