@@ -181,7 +181,7 @@ export default function GnsysLanding() {
 
           <a href="/invitacion-23-abril-2026/index.html" className="w-full lg:w-auto">
             <Button className="bg-white text-blue-900 hover:bg-blue-50 rounded-sm w-full lg:w-auto" size="sm">
-              registrate ahora
+              Registrate Ahora
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </a>
