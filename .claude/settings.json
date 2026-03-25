@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"form\\\\|email\\\\|send\\\\|nodemailer\\\\|SendGrid\\\\|Mailgun\\\\|POST\" 'c:\\\\Users\\\\Roberto Sanchez\\\\Documents\\\\gnsys-landing\\\\app' --include=*.tsx --include=*.ts -l)",
+      "Bash(grep -r \"nodemailer\\\\|SendGrid\\\\|Mailgun\\\\|resend\\\\|email\" 'c:\\\\Users\\\\Roberto Sanchez\\\\Documents\\\\gnsys-landing' --include=*.json --include=*.ts --include=*.tsx)"
+    ]
+  }
+}

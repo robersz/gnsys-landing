@@ -5,7 +5,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
-  "form-action 'self'",
+  "form-action 'self' https://crm.zoho.com",
   "frame-ancestors 'self'",
   "object-src 'none'",
   "img-src 'self' data: https://*.googleapis.com https://*.gstatic.com https://www.google.com https://maps.google.com https://maps.gstatic.com",

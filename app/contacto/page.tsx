@@ -1,4 +1,6 @@
+import { Suspense } from 'react';
 import { MapPin, Phone, Mail } from "lucide-react";
+import { ContactForm } from "@/components/ContactForm";
 
 export default function ContactoPage() {
   return (
@@ -18,7 +20,7 @@ export default function ContactoPage() {
 
       {/* Información de contacto */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        
+
         <div className="space-y-6">
           <div className="flex items-start gap-4">
             <MapPin className="h-6 w-6 text-sky-600" />
@@ -58,7 +60,20 @@ export default function ContactoPage() {
 
       </div>
 
+      {/* Formulario de contacto */}
       <section className="mt-16 border border-slate-200 rounded-xl shadow-sm p-8 bg-white">
+        <h2 className="text-2xl font-semibold text-slate-900 mb-2">
+          Envíanos un mensaje
+        </h2>
+        <p className="text-slate-600 mb-8">
+          Completa el formulario y nuestro equipo comercial te contactará a la brevedad.
+        </p>
+        <Suspense fallback={null}>
+          <ContactForm />
+        </Suspense>
+      </section>
+
+      <section className="mt-10 border border-slate-200 rounded-xl shadow-sm p-8 bg-white">
         <h2 className="text-2xl font-semibold text-slate-900 mb-3">
           ¿Prefieres hablar directamente?
         </h2>
