@@ -20,30 +20,13 @@ const defaultContentSecurityPolicy = [
   .filter(Boolean)
   .join("; ");
 
-const invitationContentSecurityPolicy = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "form-action 'self' https://crm.zoho.com",
-  "frame-ancestors 'self'",
-  "object-src 'none'",
-  "img-src 'self' data: blob: https://*.googleapis.com https://*.gstatic.com https://www.google.com https://maps.google.com https://maps.gstatic.com",
-  "font-src 'self' data: blob:",
-  "style-src 'self' 'unsafe-inline' blob:",
-  `script-src 'self' 'unsafe-inline' blob:${isProduction ? "" : " 'unsafe-eval'"}`,
-  "connect-src 'self' blob:",
-  "frame-src https://www.google.com https://maps.google.com https://maps.gstatic.com https://maps.googleapis.com",
-  isProduction ? "upgrade-insecure-requests" : null,
-]
-  .filter(Boolean)
-  .join("; ");
-
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   async redirects() {
     return [
       {
-        source: "/invitacion-flashsystem",
-        destination: "/invitacion-flashsystem.html",
+        source: "/invitacion-flashsystem.html",
+        destination: "/invitacion-flashsystem",
         permanent: false,
       },
     ];
@@ -69,13 +52,6 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: [
           { key: "Content-Security-Policy", value: defaultContentSecurityPolicy },
-          ...baseSecurityHeaders,
-        ],
-      },
-      {
-        source: "/invitacion-flashsystem.html",
-        headers: [
-          { key: "Content-Security-Policy", value: invitationContentSecurityPolicy },
           ...baseSecurityHeaders,
         ],
       },
