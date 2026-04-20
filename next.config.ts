@@ -66,16 +66,16 @@ const nextConfig: NextConfig = {
 
     return [
       {
-        source: "/invitacion-flashsystem.html",
+        source: "/:path*",
         headers: [
-          { key: "Content-Security-Policy", value: invitationContentSecurityPolicy },
+          { key: "Content-Security-Policy", value: defaultContentSecurityPolicy },
           ...baseSecurityHeaders,
         ],
       },
       {
-        source: "/:path*",
+        source: "/invitacion-flashsystem.html",
         headers: [
-          { key: "Content-Security-Policy", value: defaultContentSecurityPolicy },
+          { key: "Content-Security-Policy", value: invitationContentSecurityPolicy },
           ...baseSecurityHeaders,
         ],
       },
