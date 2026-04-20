@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const isProduction = process.env.NODE_ENV === "production";
 
-const contentSecurityPolicy = [
+const defaultContentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
   "form-action 'self' https://crm.zoho.com",
@@ -20,11 +20,36 @@ const contentSecurityPolicy = [
   .filter(Boolean)
   .join("; ");
 
+const invitationContentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self' https://crm.zoho.com",
+  "frame-ancestors 'self'",
+  "object-src 'none'",
+  "img-src 'self' data: blob: https://*.googleapis.com https://*.gstatic.com https://www.google.com https://maps.google.com https://maps.gstatic.com",
+  "font-src 'self' data: blob:",
+  "style-src 'self' 'unsafe-inline' blob:",
+  `script-src 'self' 'unsafe-inline' blob:${isProduction ? "" : " 'unsafe-eval'"}`,
+  "connect-src 'self' blob:",
+  "frame-src https://www.google.com https://maps.google.com https://maps.gstatic.com https://maps.googleapis.com",
+  isProduction ? "upgrade-insecure-requests" : null,
+]
+  .filter(Boolean)
+  .join("; ");
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: "/invitacion-flashsystem",
+        destination: "/invitacion-flashsystem.html",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
-    const securityHeaders = [
-      { key: "Content-Security-Policy", value: contentSecurityPolicy },
+    const baseSecurityHeaders = [
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       { key: "X-Content-Type-Options", value: "nosniff" },
       { key: "X-DNS-Prefetch-Control", value: "off" },
@@ -33,7 +58,7 @@ const nextConfig: NextConfig = {
     ];
 
     if (isProduction) {
-      securityHeaders.push({
+      baseSecurityHeaders.push({
         key: "Strict-Transport-Security",
         value: "max-age=63072000; includeSubDomains; preload",
       });
@@ -41,8 +66,18 @@ const nextConfig: NextConfig = {
 
     return [
       {
+        source: "/invitacion-flashsystem.html",
+        headers: [
+          { key: "Content-Security-Policy", value: invitationContentSecurityPolicy },
+          ...baseSecurityHeaders,
+        ],
+      },
+      {
         source: "/:path*",
-        headers: securityHeaders,
+        headers: [
+          { key: "Content-Security-Policy", value: defaultContentSecurityPolicy },
+          ...baseSecurityHeaders,
+        ],
       },
     ];
   },
