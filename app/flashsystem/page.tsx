@@ -10,9 +10,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "FlashSystem | Herramientas del Evento",
+  title: "IBM FlashSystem | Recursos Exclusivos GNSYS",
   description:
-    "Landing privada de GNSYS con herramientas para explorar ROI y casos de uso de IBM FlashSystem.",
+    "Explore el valor de IBM FlashSystem para su organización: calcule su ROI potencial y descubra casos de uso reales por industria.",
   robots: {
     index: false,
     follow: false,
@@ -31,9 +31,9 @@ const tools = [
     description:
       "Explora el impacto financiero de modernizar almacenamiento con IBM FlashSystem y estima beneficios potenciales en tu operación.",
     bullets: [
-      "Compara escenarios de inversión y eficiencia.",
-      "Visualiza ahorros y retorno estimado.",
-      "Ideal para conversaciones de negocio y dirección.",
+      "Compare escenarios de inversión y eficiencia.",
+      "Visualice ahorros y retorno estimado.",
+      "Lleve números concretos a sus decisiones de infraestructura.",
     ],
     accent: "from-blue-500/30 via-cyan-400/15 to-transparent",
   },
@@ -45,9 +45,9 @@ const tools = [
     description:
       "Revisa escenarios de aplicación para sectores clave y detecta rápidamente dónde FlashSystem puede acelerar resultados.",
     bullets: [
-      "Ejemplos orientados a retos reales.",
+      "Ejemplos orientados a retos reales de su sector.",
       "Enfoque por industria y tipo de operación.",
-      "Útil para identificar prioridades de adopción.",
+      "Identifique rápidamente dónde puede ganar más con FlashSystem.",
     ],
     accent: "from-teal-400/25 via-blue-500/10 to-transparent",
   },
@@ -65,7 +65,7 @@ export default function FlashSystemLandingPage() {
         <div className="mb-10 flex items-center justify-between gap-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-200">
             <QrCode className="h-4 w-4" />
-            Acceso Privado por QR
+            Recursos Exclusivos
           </div>
           <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 sm:inline-flex">
             <Sparkles className="h-4 w-4 text-cyan-300" />
@@ -76,16 +76,15 @@ export default function FlashSystemLandingPage() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div className="max-w-3xl">
             <p className="mb-5 text-sm font-medium uppercase tracking-[0.28em] text-cyan-300/90">
-              Herramientas del Evento
+              IBM FlashSystem · GNSYS
             </p>
             <h1 className="max-w-4xl text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl">
-              Una sola liga para explorar el valor de IBM FlashSystem antes de la conversación.
+              Descubra el impacto real de IBM FlashSystem en su organización.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-              Esta landing privada concentra dos recursos diseñados para prospectos:
-              una calculadora de ROI y una guía de casos de uso. El objetivo es
-              ayudarles a visualizar, desde su contexto, cómo FlashSystem puede
-              aportar eficiencia, resiliencia y velocidad de adopción.
+              Preparamos dos herramientas para que pueda evaluar, desde su propio
+              contexto, el valor concreto que FlashSystem puede aportar a su
+              operación: eficiencia financiera, resiliencia y velocidad de adopción.
             </p>
           </div>
 
@@ -96,12 +95,12 @@ export default function FlashSystemLandingPage() {
               </div>
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-300/80">
-                  Qué encontrará el cliente
+                  ¿Qué puede explorar aquí?
                 </p>
                 <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
-                  <li>Contexto rápido para entender el valor financiero del almacenamiento.</li>
-                  <li>Escenarios de uso para aterrizar conversaciones por industria.</li>
-                  <li>Acceso directo y simple desde un código QR, sin navegar todo el sitio.</li>
+                  <li>Estime el retorno financiero de modernizar su almacenamiento.</li>
+                  <li>Explore escenarios aplicados a su industria y tipo de operación.</li>
+                  <li>Acceda a ambas herramientas de forma directa, en cualquier momento.</li>
                 </ul>
               </div>
             </div>
@@ -156,15 +155,6 @@ export default function FlashSystemLandingPage() {
           })}
         </div>
 
-        <div className="mt-10 rounded-[28px] border border-white/10 bg-black/20 px-6 py-5 text-sm leading-7 text-slate-300">
-          Ruta recomendada para tu QR:
-          {" "}
-          <span className="font-semibold text-white">
-            https://gnsys.com.mx/flashsystem
-          </span>
-          . Desde ahí el prospecto puede abrir ambas herramientas sin pasar por
-          el menú principal del sitio.
-        </div>
       </section>
     </main>
   );
