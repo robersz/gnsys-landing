@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de ROI — IBM FlashSystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #03080F;
+  --bg2:       #080f1a;
+  --bg3:       #0d1625;
+  --panel:     rgba(255,255,255,0.04);
+  --border:    rgba(255,255,255,0.09);
+  --border2:   rgba(255,255,255,0.16);
+  --blue:      #0F62FE;
+  --blue-lt:   #78a9ff;
+  --cyan:      #33b1ff;
+  --teal:      #08bdba;
+  --green:     #42be65;
+  --gold:      #f1c21b;
+  --red:       #fa4d56;
+  --text:      #f4f4f4;
+  --text2:     rgba(244,244,244,0.55);
+  --text3:     rgba(244,244,244,0.3);
+  --radius:    6px;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Grid noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15,98,254,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,98,254,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glow orbs */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px; left: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(15,98,254,0.12) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-orb-2 {
+  position: fixed;
+  bottom: -150px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(8,189,186,0.08) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 48px 28px 80px;
+}
+
+/* ── HEADER ── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 52px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.logo-group { display: flex; align-items: center; gap: 14px; }
+.logo-ibm {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  opacity: 0.85;
+}
+.logo-sep { width: 1px; height: 24px; background: var(--border2); }
+.logo-sub {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  font-weight: 500;
+}
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  border: 1px solid rgba(66,190,101,0.3);
+  padding: 6px 14px;
+  border-radius: 2px;
+}
+.live-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+}
+.page-title em { font-style: normal; color: var(--cyan); }
+.page-desc {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text2);
+  max-width: 520px;
+  line-height: 1.65;
+  margin-bottom: 48px;
+}
+
+/* ── INDUSTRY TABS ── */
+.industry-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.tab:hover { border-color: var(--border2); color: var(--text); background: rgba(255,255,255,0.07); }
+.tab.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+.tab-icon { font-size: 15px; }
+
+/* ── MAIN LAYOUT ── */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ── INPUT PANEL ── */
+.input-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.panel-header {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.panel-header-icon {
+  width: 32px; height: 32px;
+  background: rgba(15,98,254,0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+.panel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.panel-subtitle { font-size: 12px; color: var(--text3); margin-top: 1px; }
+.panel-body { padding: 28px; }
+
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.field { margin-bottom: 22px; }
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.field-label { font-size: 13px; color: var(--text2); }
+.field-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cyan);
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 3px;
+  background: var(--border2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--cyan);
+  transition: transform 0.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+input[type=range]::-moz-range-thumb {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+}
+
+.divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+/* ── RESULTS PANEL ── */
+.results-panel {
+  position: sticky;
+  top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.result-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  transition: border-color 0.3s;
+}
+.result-card.highlight {
+  border-color: rgba(8,189,186,0.45);
+  background: rgba(8,189,186,0.06);
+}
+
+.result-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.result-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 5px;
+  transition: color 0.3s;
+}
+.result-note { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+.savings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.saving-item {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px;
+}
+.saving-item-label { font-size: 11px; color: var(--text3); margin-bottom: 6px; }
+.saving-item-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--green);
+}
+
+/* Payback bar */
+.payback-bar-wrap {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px;
+}
+.payback-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.payback-bar-track {
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.payback-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--cyan));
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* CTA */
+.cta-block {
+  background: linear-gradient(135deg, rgba(15,98,254,0.2), rgba(8,189,186,0.1));
+  border: 1px solid rgba(15,98,254,0.4);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  text-align: center;
+}
+.cta-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.cta-sub {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.cta-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: background 0.2s, transform 0.1s;
+}
+.cta-btn:hover { background: #0353e9; }
+.cta-btn:active { transform: scale(0.98); }
+
+/* Industry context box */
+.context-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.context-box strong { color: var(--text); font-style: normal; font-weight: 500; }
+
+/* Summary breakdown */
+.breakdown {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  transition: background 0.15s;
+}
+.breakdown-row:hover { background: rgba(255,255,255,0.03); }
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row.total {
+  background: rgba(8,189,186,0.08);
+  border-color: rgba(8,189,186,0.2);
+}
+.br-label { color: var(--text2); }
+.br-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+}
+.br-val.pos { color: var(--green); }
+.br-val.neg { color: var(--red); }
+.br-val.big {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+/* Responsive */
+@media (max-width: 780px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .results-panel { position: static; }
+  .savings-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Animate in */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.wrap > * { animation: fadeUp 0.5s ease both; }
+.wrap > *:nth-child(2) { animation-delay: 0.05s; }
+.wrap > *:nth-child(3) { animation-delay: 0.1s; }
+.wrap > *:nth-child(4) { animation-delay: 0.15s; }
+.wrap > *:nth-child(5) { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+<div class="glow-orb-2"></div>
+
+<div class="wrap">
+
+  <div class="top-bar">
+    <div class="logo-group">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="706" height="116" viewBox="0 0 706 116" style="height:36px;width:auto;display:block;"><path fill="#FEFEFE" d="M140.262 0.80966C155.799 -0.872442 167.836 6.96791 168.085 23.6811C167.913 35.2385 164.975 46.2868 163.172 57.7755C162.689 60.858 159.551 84.9058 156.684 85.7897C152.971 86.9342 141.044 86.6534 136.541 86.0617C133.097 85.6092 136.1 73.9504 136.534 71.4742L141.257 44.6117C142.164 39.4561 143.306 33.8817 143.724 28.7C144.802 15.3365 127.544 21.3568 120.991 24.8081C119.723 26.0222 118.012 38.4052 117.575 40.9749L112.739 69.0643C109.996 84.8863 112.644 87.6653 95.4991 86.432C93.3218 86.2754 88.8018 87.0136 87.1873 85.8883C84.8918 84.2884 88.298 70.109 88.6091 68.3463L93.0713 42.9613C94.1134 37.0566 99.0719 5.47164 101.171 2.51542C104.322 0.763555 113.29 1.84775 117.246 1.58539C118.797 1.48255 120.442 1.64271 121.589 2.80749C122.493 4.48904 121.827 6.37193 121.319 8.10491C127.513 3.75569 132.826 1.77498 140.262 0.80966Z"/><path fill="#FEFEFE" d="M370.717 0.892377C377.799 -0.0441306 396.597 0.963402 403.592 4.50485C404.138 4.78159 404.705 5.63142 404.732 6.33496C404.884 10.2104 403.693 18.6716 401.506 21.636C400.869 22.1355 400.076 22.1186 399.305 22.106C396.023 22.0523 392.831 21.4011 389.588 21.0212C384.735 20.4524 376.627 19.8974 371.866 20.4141C370.131 20.6024 368.509 21.1657 367.39 22.5872C366.837 23.2911 366.438 24.2169 366.559 25.129C367.155 29.6426 384.563 38.5656 388.702 41.7987C393.443 45.5021 397.409 50.2339 398.158 56.4119C398.963 63.053 396.956 70.6513 392.824 75.9237C386.614 83.8471 376.714 86.3342 367.244 87.4758C357.786 88.0862 343.05 87.1986 334.21 83.5851C332.032 82.6947 335.143 69.0264 336.135 67.198C336.761 66.5108 338.677 66.1737 339.498 66.217C348.408 66.9669 356.864 68.0475 365.819 68.026C372.927 68.009 376.705 62.4113 371.712 57.7807C361.196 48.0275 343.386 45.5236 342.529 27.9161C341.678 10.4317 354.605 1.73455 370.717 0.892377Z"/><path fill="#FEFEFE" d="M210.847 0.895317C217.992 0.0177612 237.079 0.832433 244.077 4.59636C244.471 4.80788 245.206 5.67399 245.174 6.36899C244.928 10.7936 244.519 17.2979 242.207 21.0759C241.057 22.9548 233.699 21.5403 231.636 21.3446C225.34 20.7473 218.971 20.0981 212.637 20.3894C211.088 20.4607 208.984 21.0032 207.954 22.2339C206.281 24.3267 207.467 27.4605 209.416 28.9008C216 33.5591 222.762 37.3312 229.384 42.0452C241.065 50.3612 241.266 65.203 233.042 76.1412C227.266 83.8225 216.879 86.3749 207.69 87.4587C199.367 88.219 184.341 86.9404 176.136 84.368C175.447 84.1517 174.396 83.4491 174.125 82.7249C173.077 79.9198 175.316 70.0576 176.389 67.5745C178.943 64.875 184.418 66.9377 187.895 66.8986C193.382 66.8369 214.253 71.8873 214.124 62.3574C214.055 57.2743 206.264 53.5901 202.543 51.1885C198.701 48.7088 193.781 45.9848 190.17 42.9138C180.59 35.0901 180.999 19.2079 188.506 10.1858C193.538 4.22615 203.111 1.40796 210.847 0.895317Z"/><path fill="#FEFEFE" d="M557.191 10.1206C559.803 9.68065 565.063 10.7467 567.95 11.2352C566.257 21.2255 565.966 31.1727 563.91 41.2709C561.956 50.8641 546.091 51.4846 543.826 47.0374C543.887 45.8896 543.713 46.1363 544.358 45.3129L545.179 45.2825C545.504 45.3625 545.83 45.4374 546.157 45.5071C555.482 47.4926 559.162 46.9238 561.048 37.2197C560.726 37.2753 560.404 37.3284 560.081 37.3788C551.798 38.6661 544.567 38.1527 544.529 27.9106C544.494 18.3324 547.198 11.5818 557.191 10.1206ZM554.345 35.1863C557.204 34.9993 558.516 34.8692 561.345 34.2677L563.77 13.5722C562.011 13.3857 559.398 13.0024 557.725 13.255C555.003 13.4635 553.18 13.8301 551.404 16.0795C547.332 21.2378 545.718 33.6104 554.345 35.1863Z"/><path fill="#FEFEFE" d="M594.565 58.1284C596.86 57.8143 600.136 58.6114 602.048 59.9111C604.186 61.3639 605.418 63.6248 605.889 66.1312C606.784 70.8985 605.733 77.2577 602.962 81.2859C600.361 85.0667 597.004 86.2028 592.713 86.9921C589.81 87.0972 586.676 86.6964 584.303 84.8894C582.127 83.2321 581.035 80.6807 580.681 78.0224C580.04 73.2066 581.297 67.0688 584.291 63.1733C586.979 59.6764 590.366 58.6783 594.565 58.1284ZM593.55 81.0318C595.792 79.9859 596.689 78.668 597.525 76.3782C598.566 73.5296 599.327 69.3247 598.007 66.4482C597.59 65.5385 596.992 64.7466 596.026 64.3884C595.116 64.0504 593.858 64.1805 592.892 64.2021C590.903 65.1135 590.041 66.3466 589.289 68.3638C588.172 71.3598 587.451 75.8111 588.848 78.8259C589.269 79.7349 589.896 80.4937 590.865 80.8297C591.681 81.1126 592.693 81.0461 593.55 81.0318Z"/><path fill="#FEFEFE" d="M664.731 58.4724C667.846 58.078 671.288 58.2725 673.899 60.222C675.233 61.2185 676.112 62.6106 676.336 64.2757C676.638 66.5246 675.69 69.3761 674.327 71.1647C670.22 76.5522 665.228 75.3833 659.555 76.1387C659.537 76.3386 659.526 76.5391 659.523 76.7398C659.512 77.6426 659.811 78.6165 660.46 79.2652C663.136 81.94 669.625 79.904 673.028 79.8952C673.639 80.5431 673.514 81.5927 673.587 82.4745C673.58 83.1239 673.499 83.7769 673.44 84.4235C672.961 85.1596 672.497 85.5795 671.633 85.7991C666.984 86.98 660.338 87.5697 656.092 84.9924C653.79 83.5953 652.233 81.3137 651.594 78.711C650.529 74.3684 651.681 69.4175 653.981 65.6521C656.555 61.4394 660.067 59.592 664.731 58.4724ZM663.027 71.6356C664.538 71.2527 665.783 70.5934 667.136 69.8353C667.894 68.607 668.938 67.1672 668.596 65.6451C668.472 65.1018 668.143 64.6279 667.677 64.3229C667.216 64.0158 666.467 63.873 665.923 63.863C663.348 64.5913 661.359 65.9383 660.032 68.3481C659.733 68.8921 659.63 69.4746 659.583 70.087C659.892 70.989 659.921 71.1097 660.742 71.5863L663.027 71.6356Z"/><path fill="#FEFEFE" d="M539.512 58.4459C540.685 58.3273 541.937 58.2274 543.113 58.3158C546.244 58.5511 548.351 59.7688 550.368 62.1192C550.8 64.761 550.94 66.8839 549.841 69.3866C547.986 73.613 543.173 75.8174 538.755 75.9443C537.401 75.9831 535.265 75.6549 534.042 76.1284C533.986 77.216 534.149 78.3022 534.897 79.1489C537.614 82.2271 543.994 79.7303 547.494 79.9092C548.049 80.789 547.884 82.4289 547.915 83.4615C547.947 83.8594 547.854 84.3361 547.821 84.7385C547.342 85.4602 546.368 85.75 545.563 85.9438C541.133 87.0106 534.576 87.4569 530.575 85.013C528.243 83.5886 526.778 81.3082 526.15 78.6729C525.099 74.2623 526.333 69.0859 528.686 65.2856C531.267 61.1166 534.94 59.5078 539.512 58.4459ZM533.7 71.6369L537.469 71.6624C539.624 71.1771 541.226 70.2224 542.418 68.332C542.862 67.6272 543.388 66.6959 543.196 65.8361C543.038 65.125 542.721 64.728 542.109 64.3408C541.472 63.9379 540.586 63.8928 539.855 63.9266C537.554 64.8691 535.858 65.8301 534.846 68.247C534.386 69.3457 534.023 70.491 533.7 71.6369Z"/><path fill="#FEFEFE" d="M569.877 58.5031C572.337 58.475 574.688 58.6081 577.131 58.8958C577.712 62.7289 577.854 66.4256 577.685 70.2955C577.496 71.7338 577.32 73.201 576.996 74.6157C576.057 78.7142 573.824 82.53 570.204 84.7833C566.847 86.8726 562.512 87.5291 558.672 86.613C556.711 86.1451 554.823 85.1233 553.749 83.3551C551.29 79.3044 554.131 63.5359 555.332 58.6214C557.431 58.4599 559.61 58.5651 561.718 58.5546C561.766 58.539 561.785 58.5286 561.84 58.5336C562.313 58.5756 562.518 58.7068 562.596 59.1459C562.767 60.114 562.374 61.5853 562.246 62.5803C561.717 66.71 559.461 77.134 561.496 80.311C562.159 80.9215 562.966 80.9656 563.833 80.9665C565.13 80.9679 566.322 80.5105 567.238 79.5814C571.556 75.2021 569.966 64.2509 569.877 58.5031Z"/><path fill="#FEFEFE" d="M633.063 58.5496L633.755 58.6359C634.745 60.6291 631.831 73.5518 632.042 77.0899C632.11 78.2451 632.382 79.6003 633.296 80.3903C634 80.9983 634.875 81.058 635.768 80.9933C636.989 80.9049 638.069 80.3784 638.87 79.4447C642.952 74.6813 641.591 64.2374 641.166 58.4115C643.567 58.5715 645.995 58.5918 648.401 58.6715C649.229 62.0951 649.388 65.6289 649.281 69.1362C649.033 72.7944 648.239 76.6693 646.399 79.8723C644.552 83.085 641.731 85.4693 638.121 86.4251C635.058 87.2363 629.987 87.1617 627.22 85.5161C625.909 84.7368 625.177 83.903 624.804 82.4248C623.86 78.6909 625.051 62.136 626.894 59.0517C628.313 58.1729 631.432 58.5424 633.063 58.5496Z"/><path fill="#009AF4" d="M461.338 60.2346C467.193 59.2835 472.713 63.2525 473.686 69.1121C474.659 74.9717 470.717 80.5158 464.87 81.5127C458.991 82.5151 453.417 78.5411 452.439 72.649C451.461 66.7569 455.451 61.1909 461.338 60.2346Z"/><path fill="#FEFEFE" d="M584.926 10.1312C597.276 7.85577 594.955 25.4832 583.787 26.449C581.621 26.6362 576.539 26.4194 575.254 27.4353C574.644 29.2825 575.74 31.3187 576.466 33.1174C580.251 35.6323 584.219 35.2131 588.377 33.8011C589.132 33.4418 588.823 33.4918 589.638 33.5725C590.078 34.6149 590.021 34.2267 589.678 35.419C586.5 38.9018 578.466 38.9138 574.885 36.2963C569.077 32.051 570.971 21.0741 574.651 16.0002C577.411 12.1959 580.425 10.8758 584.926 10.1312ZM575.108 23.8142C577.91 24.0198 579.154 24.0408 581.982 23.8493C591.356 21.7786 592.257 12.0696 583.362 13.1671C578.009 15.0855 576.784 18.69 575.108 23.8142Z"/><path fill="#FEFEFE" d="M661.422 10.0975C675.091 7.93496 672.797 30.3533 651.429 26.4259C651.576 27.6193 651.761 29.5343 652.139 30.6276C653.892 35.6966 659.708 35.6886 664.03 34.1396C665.219 33.6531 665.86 33.209 666.689 34.2802L666.482 35.1828C662.057 40.3918 648.851 39.0814 648.119 30.2406C647.319 20.5712 650.901 11.8103 661.422 10.0975ZM659.121 23.7811C667.91 21.4805 668.95 11.8797 659.86 13.1788C656.584 14.5458 651.787 19.3318 652.167 22.9402C653.323 24.8346 656.994 24.01 659.121 23.7811Z"/><path fill="#FEFEFE" d="M496.075 10.1216C509.149 7.67847 507.3 30.6836 485.752 26.3405C486.867 35.5047 491.59 36.4824 499.766 33.7112C500.08 33.4983 500.428 33.5929 500.816 33.6374C501.214 34.5185 501.109 34.2642 500.875 35.3232C498.105 38.911 489.536 38.8408 486.126 36.3483C480.187 32.0066 482.025 21.3056 485.727 16.081C488.463 12.2177 491.596 10.8938 496.075 10.1216ZM486.21 23.7499C488.999 24.1017 490.283 24.0324 493.042 23.8919C502.316 21.9643 503.489 12.1459 494.468 13.1584C489.107 15.0915 488 18.7197 486.21 23.7499Z"/><path fill="#FEFEFE" d="M619.91 48.5359L620.46 48.6854C621.158 50.04 617.512 74.1276 617.246 77.6006C617.169 78.5955 616.912 79.458 617.573 80.2329C619.028 80.7748 620.852 80.4312 622.375 80.2947C622.523 82.1988 622.453 84.1008 622.404 86.0073C620.272 86.4905 618.196 86.9779 615.999 87.0508C614.551 86.7346 612.792 86.546 611.47 85.8739C610.686 85.4759 610.121 85.0044 609.851 84.1461C609.312 82.4375 609.32 80.1988 609.387 78.4246C609.557 73.9133 611.635 52.5154 613.404 49.1997C614.919 48.2759 618.168 48.5834 619.91 48.5359Z"/><path fill="#FEFEFE" d="M609.194 10.138C616.608 9.10749 620.976 11.202 619.72 19.3709C619.211 22.6854 618.646 34.8232 617.06 37.0162C615.904 37.5682 615.531 37.4826 614.716 36.5736C613.159 31.7655 618.649 19.3019 615.151 14.262C614.299 13.0349 612.266 13.0039 610.892 12.9143C607.918 13.0802 605.925 13.606 603.171 14.6692C602.431 20.9564 601.78 29.6835 600.495 35.9756C600.324 36.8159 599.61 37.1083 598.936 37.3781L598.263 37.024C596.347 33.7593 599.394 16.9649 600.508 12.6937C600.804 11.5597 607.971 10.3208 609.194 10.138Z"/><path fill="#FEFEFE" d="M448.916 10.1288C464.876 7.18483 458.355 22.6985 458.131 31.9921C458.077 34.2608 457.658 36.8205 455.224 37.3925L454.677 36.9555C453.546 32.2052 456.057 24.0652 456.168 19.0645C456.279 14.0904 454.484 13.0743 450.027 12.934C448.927 13.0765 444.156 13.673 443.411 14.7041C440.915 18.1601 443.034 37.772 438.002 37.3179C437.76 37.0933 437.18 36.6354 437.226 36.0835C437.762 29.5603 438.238 18.7265 440.292 12.8737C440.774 11.499 447.549 10.3551 448.916 10.1288Z"/><path fill="#FEFEFE" d="M636.395 10.034C638.841 9.77633 643.856 9.63064 645.528 11.552L645.418 12.5067C645.118 12.8921 644.726 13.5883 644.257 13.5818C640.012 13.5234 636.083 11.6917 632.619 15.4746C628.96 19.4706 626.805 29.1658 631.34 33.3543C633.7 35.5337 636.945 35.0921 639.895 34.9387C641.738 34.8086 641.588 34.3855 642.931 35.1499L643.042 35.7667C642.437 36.7357 640.605 37.5179 639.542 37.752C625.393 40.8682 621.902 27.166 627.468 16.7035C629.578 12.7372 632.465 11.1434 636.395 10.034Z"/><path fill="#FEFEFE" d="M471.155 2.89972C472.312 3.12761 472.132 2.91554 472.839 3.68436C473.158 5.9971 472.549 8.15035 472.12 10.4786C474.617 10.5213 478.353 10.3003 480.428 11.5548L480.526 12.136C478.763 13.8228 474.104 13.4302 471.803 13.3068C471.57 16.8311 468.836 32.6238 470.187 34.3965C472.141 35.6098 474.511 35.03 476.806 34.763C477.514 34.9994 477.63 35.3337 477.779 35.9625C476.835 38.4778 466.367 39.9362 466.213 33.602C466.045 26.6497 467.99 20.2352 468.274 13.3666C467.297 13.3156 466.528 13.2164 465.558 13.0777C464.965 12.4483 465.117 12.6742 465.128 11.6609C466.121 10.634 466.789 10.8572 468.422 10.3143C470.418 7.86394 468.039 5.34867 471.155 2.89972Z"/><path fill="#FEFEFE" d="M537.943 10.4183C539.151 10.3244 540.02 10.0983 540.877 10.9652C540.819 14.2111 538.411 35.071 537.536 37.4695C536.233 37.4412 535.77 37.641 534.758 37.0073C534.536 33.9249 536.999 13.4703 537.943 10.4183Z"/><path fill="#FEFEFE" d="M430.193 10.3559C431.028 10.3655 431.94 10.4849 432.777 10.5765C433.611 12.6435 430.406 34.4126 429.37 37.4981C428.929 37.4615 427.124 37.2848 427.139 36.7517C427.346 29.6827 428.115 16.8165 430.193 10.3559Z"/><path fill="#FEFEFE" d="M47.332 85.2515C35.9001 86.8348 23.553 87.399 13.9602 79.8576C0.569833 69.3306 3.3766 53.6611 5.94004 39.3248C9.45315 19.6774 17.253 3.68901 39.2557 1.25552C52.7077 -0.0399404 70.6522 0.339529 83.3511 5.50264C83.6983 5.66177 84.3687 6.38728 84.3271 6.80412C83.1759 18.3346 80.172 33.145 78.179 44.4958L72.9276 74.4602C71.089 84.9144 70.0566 96.6869 62.7957 104.948C58.0903 110.301 51.5275 113.184 44.716 114.754C43.2836 115.091 40.2242 115.594 39.1699 116L19.0207 116C13.065 113.946 6.43059 114.65 0 110.821L0 106.9C3.16381 98.5658 -1.87941 94.4613 11.5117 95.9368C20.0409 96.8767 29.631 97.6057 38.1892 97.0196C45.107 96.4053 46.1486 90.9167 47.332 85.2515ZM42.009 66.6325C44.5818 66.3536 48.4989 66.0531 50.9472 65.6287C52.7131 52.1912 55.956 34.8822 58.5448 21.4558C54.0141 20.7585 49.484 20.3173 44.8932 20.5101C31.6616 22.4793 30.7776 34.5371 28.8916 45.6268C26.6064 59.0631 25.8296 67.1336 42.009 66.6325Z"/><path fill="#FEFEFE" d="M314.076 1.65152C317.285 1.58742 336.232 0.932687 337.588 2.80295C336.974 7.69057 331.043 19.1665 328.783 24.0633L314.254 55.5681L302.324 81.4761C299.007 88.6693 296.086 95.3531 292.068 102.196C290.279 105.251 287.917 107.931 285.112 110.088C279.069 114.803 275.74 113.982 270.464 116L253.484 116C250.249 114.952 242.812 114.867 241.394 112.093C240.123 109.608 242.226 102.169 242.877 99.3215C243.843 95.0941 248.237 95.924 251.319 96.3223C254.84 96.8086 258.381 97.1349 261.931 97.3001C271.818 97.8536 273.852 94.5418 277.696 85.7578C273.275 84.7974 269.642 84.133 267.016 80.0726C265.57 77.8348 265.079 74.4388 264.636 71.8215C263.563 65.4908 256.393 6.20688 256.934 3.84967C257.081 3.21285 257.772 2.53122 258.313 2.20087C258.983 1.79196 259.817 1.61193 260.59 1.54692C262.889 1.35388 277.876 1.42539 279.575 1.86409C280.311 2.05427 280.92 2.21526 281.334 2.89943C282.853 5.41104 284.446 43.7093 284.789 49.6219C285 53.2557 284.725 57.712 285.655 61.2054C285.893 62.0993 286.162 62.4709 286.9 62.9973C288.433 62.3258 293.537 48.7456 294.63 46.0662L305.642 19.2234C307.548 14.5886 310.932 4.71322 314.076 1.65152Z"/><path fill="#FEFEFE" d="M697.413 58.8682C698.329 49.8236 696.026 48.5782 706 48.4945L706 52.4073C705.239 54.8658 704.866 59.3572 704.525 62.0814C703.677 69.0006 702.879 75.9403 702.106 82.8668C701.964 84.5243 701.068 85.7229 699.309 85.9302C694.313 86.5963 685.709 88.1206 681.528 84.4812C675.337 79.0921 678.339 64.9202 684.76 60.7037C688.983 57.9302 692.798 58.0309 697.413 58.8682ZM691.359 81.1954C692.353 81.0714 693.794 81.0811 694.551 80.3707C696.084 75.3499 695.779 69.407 696.625 64.1901C695.017 64.1634 693.204 63.968 691.619 64.1924C688.924 65.5236 687.626 67.354 686.669 70.175C685.816 72.6888 685.406 75.8888 686.617 78.3561C687.108 79.3575 687.986 80.369 689.067 80.7401C689.786 80.9871 690.608 81.0822 691.359 81.1954Z"/><path fill="#FEFEFE" d="M526.175 0L529.919 0C529.866 0.252001 529.821 0.50566 529.785 0.760578C528.279 11.3121 527.171 22.1514 525.966 32.7517C525.868 33.6124 526.3 34.1534 526.768 34.7796C528.256 35.4725 529.34 34.7846 531.248 35.0183L531.664 35.5974C531.582 36.1227 531.527 37.0337 531.046 37.2187C525.758 39.2529 521.871 38.2922 522.317 32.3395C523.135 21.426 525.328 10.716 526.175 0Z"/><path fill="#FEFEFE" d="M512.844 0L516.281 0C514.83 10.8368 513.598 22.1802 512.424 33.08C512.321 34.0401 512.684 34.3084 513.299 34.8801C515.25 35.5411 516.801 34.466 517.934 35.4804C518.026 36.3408 518.018 36.5038 517.56 37.2384C516.045 38.1138 513.451 38.2019 511.748 37.8714C510.793 37.6861 509.863 37.2111 509.325 36.3702C507.868 34.0955 511.903 4.24026 512.844 0Z"/></svg>
+      <div class="logo-sep"></div>
+      <span class="logo-sub">FlashSystem ROI Calculator</span>
+    </div>
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      Cálculo en tiempo real
+    </div>
+  </div>
+
+  <h1 class="page-title">¿Cuánto te cuesta<br><em>no tener</em> FlashSystem?</h1>
+  <p class="page-desc">Ingresa los datos de tu operación actual. El cálculo muestra el ahorro proyectado y el período de recuperación de la inversión en función de tu industria.</p>
+
+  <!-- Industry tabs -->
+  <div class="industry-tabs">
+    <button class="tab active" onclick="setIndustry('manufactura')"><span class="tab-icon">🏭</span> Manufactura</button>
+    <button class="tab" onclick="setIndustry('banca')"><span class="tab-icon">🏦</span> Banca</button>
+    <button class="tab" onclick="setIndustry('salud')"><span class="tab-icon">🏥</span> Salud</button>
+    <button class="tab" onclick="setIndustry('retail')"><span class="tab-icon">🛍️</span> Retail</button>
+  </div>
+
+  <!-- Context -->
+  <div class="context-box" id="context-box">
+    Sector Manufactura: el costo principal es el <strong>downtime de línea de producción</strong>. Cada hora sin sistemas ERP/MES activos detiene la cadena de valor completa.
+  </div>
+
+  <div class="main-grid">
+
+    <!-- LEFT: Inputs -->
+    <div class="input-panel">
+      <div class="panel-header">
+        <div class="panel-header-icon">⚙️</div>
+        <div>
+          <div class="panel-title">Parámetros de tu operación</div>
+          <div class="panel-subtitle">Ajusta los valores para tu empresa</div>
+        </div>
+      </div>
+      <div class="panel-body">
+
+        <div class="section-label">Infraestructura actual</div>
+
+        <div class="field">
+          <div class="field-row">
+            <span class="field-label">Capacidad de almacenamiento (TB)</span>
+            <span class="field-value" id="lbl-tb">50 TB</span>
+          </div>
+          <input type="range" id="sl-tb" min="10" max="500" step="5" value="50" oninput="calc()">
+        </div>
+
+        <div class="field">
+          <div class="field-row">
+            <span class="field-label">Costo por TB/mes (almacenamiento actual)</span>
+            <span class="field-value" id="lbl-cost-tb">$120 USD</span>
+          </div>
+          <input type="range" id="sl-cost-tb" min="40" max="400" step="10" value="120" oninput="calc()">
+        </div>
+
+        <div class="field">
+          <div class="field-row">
+            <span class="field-label">Personal de TI dedicado a storage (personas)</span>
+            <span class="field-value" id="lbl-staff">2 personas</span>
+          </div>
+          <input type="range" id="sl-staff" min="1" max="15" step="1" value="2" oninput="calc()">
+        </div>
+
+        <div class="field">
+          <div class="field-row">
+            <span class="field-label">Costo promedio por persona TI (USD/mes)</span>
+            <span class="field-value" id="lbl-staff-cost">$3,500 USD</span>
+          </div>
+          <input type="range" id="sl-staff-cost" min="1000" max="12000" step="500" value="3500" oninput="calc()">
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-label" id="section-downtime">Riesgo de downtime</div>
+
+        <div class="field">
+          <div class="field-row">
+            <span class="field-label" id="lbl-incidents-label">Incidentes de downtime al año</span>
+            <span class="field-value" id="lbl-incidents">3 incidentes</span>
+          </div>
+          <input type="range" id="sl-incidents" min="1" max="20" step="1" value="3" oninput="calc()">
+        </div>
+
+        <div class="field">
+          <div class="field-row">
+            <span class="field-label" id="lbl-hrs-label">Horas promedio de recuperación por incidente</span>
+            <span class="field-value" id="lbl-hrs">8 horas</span>
+          </div>
+          <input type="range" id="sl-hrs" min="1" max="72" step="1" value="8" oninput="calc()">
+        </div>
+
+        <div class="field">
+          <div class="field-row">
+            <span class="field-label" id="lbl-downtime-cost-label">Costo por hora de downtime (USD)</span>
+            <span class="field-value" id="lbl-downtime-cost">$15,000 USD</span>
+          </div>
+          <input type="range" id="sl-downtime-cost" min="1000" max="500000" step="1000" value="15000" oninput="calc()">
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-label">Inversión estimada FlashSystem</div>
+
+        <div class="field">
+          <div class="field-row">
+            <span class="field-label">CAPEX estimado (USD)</span>
+            <span class="field-value" id="lbl-capex">$180,000 USD</span>
+          </div>
+          <input type="range" id="sl-capex" min="30000" max="2000000" step="10000" value="180000" oninput="calc()">
+        </div>
+
+        <!-- Breakdown table -->
+        <div class="divider"></div>
+        <div class="section-label">Desglose de ahorro anual</div>
+        <div class="breakdown">
+          <div class="breakdown-row">
+            <span class="br-label">Reducción costo storage (40%)</span>
+            <span class="br-val pos" id="br-storage">—</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="br-label">Reducción overhead de personal TI (30%)</span>
+            <span class="br-val pos" id="br-staff">—</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="br-label">Reducción downtime (90% menos horas)</span>
+            <span class="br-val pos" id="br-downtime">—</span>
+          </div>
+          <div class="breakdown-row total">
+            <span class="br-label" style="font-weight:500;color:var(--text)">Ahorro total año 1</span>
+            <span class="br-val big" id="br-total">—</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: Results -->
+    <div class="results-panel">
+
+      <div class="result-card highlight">
+        <div class="result-label">Ahorro año 1</div>
+        <div class="result-number" id="res-saving" style="color: var(--teal)">—</div>
+        <div class="result-note">vs. costo de operación actual</div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">ROI proyectado (3 años)</div>
+        <div class="result-number" id="res-roi" style="color: var(--green)">—</div>
+        <div class="result-note">Retorno sobre la inversión acumulado</div>
+      </div>
+
+      <div class="payback-bar-wrap">
+        <div class="payback-bar-label">
+          <span>Período de recuperación</span>
+          <span id="res-payback" style="color:var(--cyan); font-weight:500">—</span>
+        </div>
+        <div class="payback-bar-track">
+          <div class="payback-bar-fill" id="payback-fill" style="width:0%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:6px">
+          <span>0 meses</span><span>36 meses</span>
+        </div>
+      </div>
+
+      <div class="savings-grid">
+        <div class="saving-item">
+          <div class="saving-item-label">Ahorro storage/año</div>
+          <div class="saving-item-val" id="sv-storage">—</div>
+        </div>
+        <div class="saving-item">
+          <div class="saving-item-label">Ahorro personal/año</div>
+          <div class="saving-item-val" id="sv-staff">—</div>
+        </div>
+        <div class="saving-item">
+          <div class="saving-item-label">Ahorro downtime/año</div>
+          <div class="saving-item-val" id="sv-downtime">—</div>
+        </div>
+        <div class="saving-item">
+          <div class="saving-item-label">Costo actual/año</div>
+          <div class="saving-item-val" style="color:var(--red)" id="sv-current">—</div>
+        </div>
+      </div>
+
+      <div class="cta-block">
+        <div class="cta-title">¿Listo para presentar estos números?</div>
+        <div class="cta-sub">Comparte esta pantalla con tu prospecto o imprime el resumen al finalizar el evento.</div>
+        <button class="cta-btn" onclick="printSummary()">🖨 Imprimir resumen ejecutivo</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const industryData = {
+  manufactura: {
+    context: 'Sector Manufactura: el costo principal es el <strong>downtime de línea de producción</strong>. Cada hora sin sistemas ERP/MES activos detiene la cadena de valor completa.',
+    incidents: 3, hrs: 8, downtimeCost: 15000, tb: 50, costTb: 120, staff: 2, staffCost: 3500, capex: 180000,
+    sectionLabel: 'Riesgo de downtime',
+    incidentsLabel: 'Incidentes de downtime al año',
+    hrsLabel: 'Horas promedio de recuperación por incidente',
+    costLabel: 'Costo por hora de línea parada (USD)',
+    storageReduction: 0.40, staffReduction: 0.30, downtimeReduction: 0.90
+  },
+  banca: {
+    context: 'Sector Banca: el costo está en <strong>transacciones no procesadas y multas regulatorias</strong>. Un minuto de caída en core bancario puede representar miles de operaciones perdidas.',
+    incidents: 5, hrs: 3, downtimeCost: 80000, tb: 120, costTb: 180, staff: 4, staffCost: 5000, capex: 450000,
+    sectionLabel: 'Riesgo de caídas en core bancario',
+    incidentsLabel: 'Eventos de degradación al año',
+    hrsLabel: 'Horas de afectación promedio',
+    costLabel: 'Costo por hora de caída en core (USD)',
+    storageReduction: 0.38, staffReduction: 0.28, downtimeReduction: 0.92
+  },
+  salud: {
+    context: 'Sector Salud: el riesgo es <strong>operacional y regulatorio</strong>. Un ataque de ransomware que afecte el HIS puede obligar a cancelar cirugías y reportar el incidente ante la autoridad sanitaria.',
+    incidents: 2, hrs: 18, downtimeCost: 25000, tb: 80, costTb: 150, staff: 3, staffCost: 4000, capex: 280000,
+    sectionLabel: 'Riesgo de ransomware / downtime clínico',
+    incidentsLabel: 'Incidentes de seguridad / downtime al año',
+    hrsLabel: 'Horas promedio de recuperación',
+    costLabel: 'Costo por hora de sistema clínico caído (USD)',
+    storageReduction: 0.42, staffReduction: 0.32, downtimeReduction: 0.88
+  },
+  retail: {
+    context: 'Sector Retail: el costo se concentra en <strong>ventas perdidas durante picos</strong> (Buen Fin, Hot Sale, quincenas). La latencia alta en POS y e-commerce se traduce directamente en abandono de carrito.',
+    incidents: 6, hrs: 4, downtimeCost: 40000, tb: 60, costTb: 100, staff: 2, staffCost: 3500, capex: 220000,
+    sectionLabel: 'Impacto en ventas por degradación',
+    incidentsLabel: 'Eventos de degradación / caída al año',
+    hrsLabel: 'Horas de afectación promedio',
+    costLabel: 'Costo por hora de POS/e-comm caído (USD)',
+    storageReduction: 0.38, staffReduction: 0.28, downtimeReduction: 0.85
+  }
+};
+
+let currentIndustry = 'manufactura';
+
+function setIndustry(ind) {
+  currentIndustry = ind;
+  const d = industryData[ind];
+
+  // Update tabs
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  // Update context
+  document.getElementById('context-box').innerHTML = d.context;
+
+  // Update labels
+  document.getElementById('section-downtime').textContent = d.sectionLabel;
+  document.getElementById('lbl-incidents-label').textContent = d.incidentsLabel;
+  document.getElementById('lbl-hrs-label').textContent = d.hrsLabel;
+  document.getElementById('lbl-downtime-cost-label').textContent = d.costLabel;
+
+  // Set slider values
+  document.getElementById('sl-tb').value = d.tb;
+  document.getElementById('sl-cost-tb').value = d.costTb;
+  document.getElementById('sl-staff').value = d.staff;
+  document.getElementById('sl-staff-cost').value = d.staffCost;
+  document.getElementById('sl-incidents').value = d.incidents;
+  document.getElementById('sl-hrs').value = d.hrs;
+  document.getElementById('sl-downtime-cost').value = d.downtimeCost;
+  document.getElementById('sl-capex').value = d.capex;
+
+  calc();
+}
+
+function fmt(n) {
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return '$' + Math.round(n/1000) + 'K';
+  return '$' + n.toLocaleString();
+}
+function fmtFull(n) {
+  return '$' + Math.round(n).toLocaleString() + ' USD';
+}
+
+function calc() {
+  const d = industryData[currentIndustry];
+  const tb = +document.getElementById('sl-tb').value;
+  const costTb = +document.getElementById('sl-cost-tb').value;
+  const staff = +document.getElementById('sl-staff').value;
+  const staffCost = +document.getElementById('sl-staff-cost').value;
+  const incidents = +document.getElementById('sl-incidents').value;
+  const hrs = +document.getElementById('sl-hrs').value;
+  const downtimeCost = +document.getElementById('sl-downtime-cost').value;
+  const capex = +document.getElementById('sl-capex').value;
+
+  // Update labels
+  document.getElementById('lbl-tb').textContent = tb + ' TB';
+  document.getElementById('lbl-cost-tb').textContent = '$' + costTb.toLocaleString() + ' USD';
+  document.getElementById('lbl-staff').textContent = staff + ' persona' + (staff>1?'s':'');
+  document.getElementById('lbl-staff-cost').textContent = '$' + staffCost.toLocaleString() + ' USD';
+  document.getElementById('lbl-incidents').textContent = incidents + ' incidente' + (incidents>1?'s':'');
+  document.getElementById('lbl-hrs').textContent = hrs + ' hora' + (hrs>1?'s':'');
+  document.getElementById('lbl-downtime-cost').textContent = '$' + downtimeCost.toLocaleString() + ' USD';
+  document.getElementById('lbl-capex').textContent = '$' + capex.toLocaleString() + ' USD';
+
+  // Annual current costs
+  const storageCostYear = tb * costTb * 12;
+  const staffCostYear = staff * staffCost * 12;
+  const downtimeCostYear = incidents * hrs * downtimeCost;
+  const totalCurrentYear = storageCostYear + staffCostYear + downtimeCostYear;
+
+  // Savings
+  const savStorage = storageCostYear * d.storageReduction;
+  const savStaff = staffCostYear * d.staffReduction;
+  const savDowntime = downtimeCostYear * d.downtimeReduction;
+  const totalSaving = savStorage + savStaff + savDowntime;
+
+  // ROI 3 years
+  const saving3y = totalSaving * 3;
+  const roi3y = ((saving3y - capex) / capex) * 100;
+
+  // Payback in months
+  const paybackMonths = capex / (totalSaving / 12);
+
+  // Update results
+  document.getElementById('res-saving').textContent = fmt(totalSaving);
+  document.getElementById('res-roi').textContent = Math.max(0, Math.round(roi3y)) + '%';
+
+  const paybackText = paybackMonths <= 36
+    ? Math.round(paybackMonths) + ' meses'
+    : '> 36 meses';
+  document.getElementById('res-payback').textContent = paybackText;
+
+  const fillPct = Math.min(100, (paybackMonths / 36) * 100);
+  document.getElementById('payback-fill').style.width = fillPct + '%';
+
+  // Breakdown
+  document.getElementById('br-storage').textContent = fmtFull(savStorage);
+  document.getElementById('br-staff').textContent = fmtFull(savStaff);
+  document.getElementById('br-downtime').textContent = fmtFull(savDowntime);
+  document.getElementById('br-total').textContent = fmt(totalSaving);
+
+  // Small cards
+  document.getElementById('sv-storage').textContent = fmt(savStorage);
+  document.getElementById('sv-staff').textContent = fmt(savStaff);
+  document.getElementById('sv-downtime').textContent = fmt(savDowntime);
+  document.getElementById('sv-current').textContent = fmt(totalCurrentYear);
+
+  // Color ROI
+  const roiEl = document.getElementById('res-roi');
+  roiEl.style.color = roi3y > 100 ? 'var(--green)' : roi3y > 0 ? 'var(--gold)' : 'var(--red)';
+}
+
+function printSummary() {
+  window.print();
+}
+
+// Init
+calc();
+</script>
+
+<style>
+@media print {
+  body { background: white; color: black; }
+  body::before, body::after, .glow-orb-2 { display: none; }
+  .industry-tabs, .cta-block, .payback-bar-wrap { display: none; }
+  .main-grid { grid-template-columns: 1fr 1fr; }
+  .results-panel { position: static; }
+  .result-card, .input-panel, .breakdown, .saving-item { border: 1px solid #ccc !important; background: white !important; }
+  .result-number, .br-val, .saving-item-val { color: black !important; }
+  .field-value, .result-note, .br-label, .field-label, .section-label, .panel-title { color: #444 !important; }
+  .page-title, .page-desc, .top-bar, .context-box { color: black !important; }
+}
+</style>
+</body>
+</html>

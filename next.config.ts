@@ -29,6 +29,16 @@ const nextConfig: NextConfig = {
         destination: "/invitacion-flashsystem",
         permanent: false,
       },
+      {
+        source: "/roi_flashsystem.html",
+        destination: "/flashsystem/roi",
+        permanent: false,
+      },
+      {
+        source: "/casos_uso_flashsystem.html",
+        destination: "/flashsystem/casos-uso",
+        permanent: false,
+      },
     ];
   },
   async headers() {

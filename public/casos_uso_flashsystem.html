@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBM FlashSystem — Casos de Uso por Industria</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ibm-blue: #0F62FE;
+    --ibm-dark: #001141;
+    --ibm-mid: #0043CE;
+    --accent-cyan: #00B0FF;
+    --accent-teal: #009D9A;
+    --accent-gold: #F1C21B;
+    --accent-red: #DA1E28;
+    --gray-90: #161616;
+    --gray-80: #262626;
+    --gray-70: #393939;
+    --gray-20: #dde1e6;
+    --gray-10: #f4f4f4;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ibm-dark);
+    color: var(--white);
+    min-height: 100vh;
+    padding: 48px 32px 64px;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(15,98,254,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(0,176,255,0.1) 0%, transparent 55%);
+  }
+
+  /* Header */
+  header {
+    max-width: 1100px;
+    margin: 0 auto 56px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .header-left { flex: 1; }
+  .event-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0,176,255,0.35);
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .event-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  h1 span { color: var(--accent-cyan); }
+  .subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+  .ibm-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    opacity: 0.7;
+  }
+  .ibm-badge span:first-child {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .ibm-badge span:last-child {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+  }
+
+  /* Grid */
+  .grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+    gap: 24px;
+  }
+
+  /* Card */
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,0.22);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .card-header {
+    padding: 28px 32px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .industry-icon {
+    width: 48px; height: 48px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .card-header-text { flex: 1; }
+  .industry-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.6;
+  }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--white);
+  }
+
+  .card-body { padding: 28px 32px; }
+
+  /* Pain point */
+  .pain-block {
+    background: rgba(218,30,40,0.1);
+    border-left: 3px solid var(--accent-red);
+    border-radius: 0 4px 4px 0;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+  }
+  .pain-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ff8389;
+    margin-bottom: 6px;
+  }
+  .pain-text {
+    font-size: 14px;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+  }
+
+  /* Use cases */
+  .cases-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 14px;
+  }
+  .case-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .case-item:last-of-type { border-bottom: none; }
+  .case-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .tag-speed    { background: rgba(0,176,255,0.18); color: var(--accent-cyan); }
+  .tag-cost     { background: rgba(241,194,27,0.18); color: var(--accent-gold); }
+  .tag-resil    { background: rgba(0,157,154,0.18); color: var(--accent-teal); }
+  .tag-ops      { background: rgba(15,98,254,0.25); color: #78a9ff; }
+
+  .case-content { flex: 1; }
+  .case-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .case-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.55;
+  }
+
+  /* KPI strip */
+  .kpi-strip {
+    display: flex;
+    gap: 0;
+    margin-top: 24px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .kpi {
+    flex: 1;
+    padding: 14px 16px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+  }
+  .kpi:last-child { border-right: none; }
+  .kpi-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-desc {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.3;
+  }
+
+  /* Conversation starter */
+  .convo-block {
+    margin-top: 22px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+    padding: 16px 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .convo-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .convo-label::before {
+    content: '💬';
+    font-size: 12px;
+  }
+  .convo-text {
+    font-size: 13.5px;
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+  .convo-text strong {
+    color: var(--white);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* Color accents per card */
+  .card-manufactura .industry-icon { background: rgba(0,176,255,0.15); }
+  .card-banca       .industry-icon { background: rgba(241,194,27,0.15); }
+  .card-salud       .industry-icon { background: rgba(0,157,154,0.15); }
+  .card-retail      .industry-icon { background: rgba(15,98,254,0.2); }
+
+  .card-manufactura .card-title { color: var(--accent-cyan); }
+  .card-banca       .card-title { color: var(--accent-gold); }
+  .card-salud       .card-title { color: #42be65; }
+  .card-retail      .card-title { color: #a56eff; }
+
+  .card-manufactura .kpi-number { color: var(--accent-cyan); }
+  .card-banca       .kpi-number { color: var(--accent-gold); }
+  .card-salud       .kpi-number { color: #42be65; }
+  .card-retail      .kpi-number { color: #a56eff; }
+
+  /* Footer */
+  footer {
+    max-width: 1100px;
+    margin: 48px auto 0;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+  .footer-note strong { color: rgba(255,255,255,0.55); font-weight: 500; }
+
+  @media (max-width: 700px) {
+    body { padding: 32px 16px 48px; }
+    .grid { grid-template-columns: 1fr; }
+    header { flex-direction: column; }
+    .ibm-badge { align-items: flex-start; }
+    .card-header, .card-body { padding: 20px; }
+    .kpi-strip { flex-wrap: wrap; }
+    .kpi { min-width: 45%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 706 116" style="height:34px;width:auto;display:block;margin-bottom:20px;opacity:0.9;"><path fill="#FEFEFE" d="M140.262 0.80966C155.799 -0.872442 167.836 6.96791 168.085 23.6811C167.913 35.2385 164.975 46.2868 163.172 57.7755C162.689 60.858 159.551 84.9058 156.684 85.7897C152.971 86.9342 141.044 86.6534 136.541 86.0617C133.097 85.6092 136.1 73.9504 136.534 71.4742L141.257 44.6117C142.164 39.4561 143.306 33.8817 143.724 28.7C144.802 15.3365 127.544 21.3568 120.991 24.8081C119.723 26.0222 118.012 38.4052 117.575 40.9749L112.739 69.0643C109.996 84.8863 112.644 87.6653 95.4991 86.432C93.3218 86.2754 88.8018 87.0136 87.1873 85.8883C84.8918 84.2884 88.298 70.109 88.6091 68.3463L93.0713 42.9613C94.1134 37.0566 99.0719 5.47164 101.171 2.51542C104.322 0.763555 113.29 1.84775 117.246 1.58539C118.797 1.48255 120.442 1.64271 121.589 2.80749C122.493 4.48904 121.827 6.37193 121.319 8.10491C127.513 3.75569 132.826 1.77498 140.262 0.80966Z"/><path fill="#FEFEFE" d="M370.717 0.892377C377.799 -0.0441306 396.597 0.963402 403.592 4.50485C404.138 4.78159 404.705 5.63142 404.732 6.33496C404.884 10.2104 403.693 18.6716 401.506 21.636C400.869 22.1355 400.076 22.1186 399.305 22.106C396.023 22.0523 392.831 21.4011 389.588 21.0212C384.735 20.4524 376.627 19.8974 371.866 20.4141C370.131 20.6024 368.509 21.1657 367.39 22.5872C366.837 23.2911 366.438 24.2169 366.559 25.129C367.155 29.6426 384.563 38.5656 388.702 41.7987C393.443 45.5021 397.409 50.2339 398.158 56.4119C398.963 63.053 396.956 70.6513 392.824 75.9237C386.614 83.8471 376.714 86.3342 367.244 87.4758C357.786 88.0862 343.05 87.1986 334.21 83.5851C332.032 82.6947 335.143 69.0264 336.135 67.198C336.761 66.5108 338.677 66.1737 339.498 66.217C348.408 66.9669 356.864 68.0475 365.819 68.026C372.927 68.009 376.705 62.4113 371.712 57.7807C361.196 48.0275 343.386 45.5236 342.529 27.9161C341.678 10.4317 354.605 1.73455 370.717 0.892377Z"/><path fill="#FEFEFE" d="M210.847 0.895317C217.992 0.0177612 237.079 0.832433 244.077 4.59636C244.471 4.80788 245.206 5.67399 245.174 6.36899C244.928 10.7936 244.519 17.2979 242.207 21.0759C241.057 22.9548 233.699 21.5403 231.636 21.3446C225.34 20.7473 218.971 20.0981 212.637 20.3894C211.088 20.4607 208.984 21.0032 207.954 22.2339C206.281 24.3267 207.467 27.4605 209.416 28.9008C216 33.5591 222.762 37.3312 229.384 42.0452C241.065 50.3612 241.266 65.203 233.042 76.1412C227.266 83.8225 216.879 86.3749 207.69 87.4587C199.367 88.219 184.341 86.9404 176.136 84.368C175.447 84.1517 174.396 83.4491 174.125 82.7249C173.077 79.9198 175.316 70.0576 176.389 67.5745C178.943 64.875 184.418 66.9377 187.895 66.8986C193.382 66.8369 214.253 71.8873 214.124 62.3574C214.055 57.2743 206.264 53.5901 202.543 51.1885C198.701 48.7088 193.781 45.9848 190.17 42.9138C180.59 35.0901 180.999 19.2079 188.506 10.1858C193.538 4.22615 203.111 1.40796 210.847 0.895317Z"/><path fill="#009AF4" d="M461.338 60.2346C467.193 59.2835 472.713 63.2525 473.686 69.1121C474.659 74.9717 470.717 80.5158 464.87 81.5127C458.991 82.5151 453.417 78.5411 452.439 72.649C451.461 66.7569 455.451 61.1909 461.338 60.2346Z"/><path fill="#FEFEFE" d="M47.332 85.2515C35.9001 86.8348 23.553 87.399 13.9602 79.8576C0.569833 69.3306 3.3766 53.6611 5.94004 39.3248C9.45315 19.6774 17.253 3.68901 39.2557 1.25552C52.7077 -0.0399404 70.6522 0.339529 83.3511 5.50264C83.6983 5.66177 84.3687 6.38728 84.3271 6.80412C83.1759 18.3346 80.172 33.145 78.179 44.4958L72.9276 74.4602C71.089 84.9144 70.0566 96.6869 62.7957 104.948C58.0903 110.301 51.5275 113.184 44.716 114.754C43.2836 115.091 40.2242 115.594 39.1699 116L19.0207 116C13.065 113.946 6.43059 114.65 0 110.821L0 106.9C3.16381 98.5658 -1.87941 94.4613 11.5117 95.9368C20.0409 96.8767 29.631 97.6057 38.1892 97.0196C45.107 96.4053 46.1486 90.9167 47.332 85.2515ZM42.009 66.6325C44.5818 66.3536 48.4989 66.0531 50.9472 65.6287C52.7131 52.1912 55.956 34.8822 58.5448 21.4558C54.0141 20.7585 49.484 20.3173 44.8932 20.5101C31.6616 22.4793 30.7776 34.5371 28.8916 45.6268C26.6064 59.0631 25.8296 67.1336 42.009 66.6325Z"/><path fill="#FEFEFE" d="M314.076 1.65152C317.285 1.58742 336.232 0.932687 337.588 2.80295C336.974 7.69057 331.043 19.1665 328.783 24.0633L314.254 55.5681L302.324 81.4761C299.007 88.6693 296.086 95.3531 292.068 102.196C290.279 105.251 287.917 107.931 285.112 110.088C279.069 114.803 275.74 113.982 270.464 116L253.484 116C250.249 114.952 242.812 114.867 241.394 112.093C240.123 109.608 242.226 102.169 242.877 99.3215C243.843 95.0941 248.237 95.924 251.319 96.3223C254.84 96.8086 258.381 97.1349 261.931 97.3001C271.818 97.8536 273.852 94.5418 277.696 85.7578C273.275 84.7974 269.642 84.133 267.016 80.0726C265.57 77.8348 265.079 74.4388 264.636 71.8215C263.563 65.4908 256.393 6.20688 256.934 3.84967C257.081 3.21285 257.772 2.53122 258.313 2.20087C258.983 1.79196 259.817 1.61193 260.59 1.54692C262.889 1.35388 277.876 1.42539 279.575 1.86409C280.311 2.05427 280.92 2.21526 281.334 2.89943C282.853 5.41104 284.446 43.7093 284.789 49.6219C285 53.2557 284.725 57.712 285.655 61.2054C285.893 62.0993 286.162 62.4709 286.9 62.9973C288.433 62.3258 293.537 48.7456 294.63 46.0662L305.642 19.2234C307.548 14.5886 310.932 4.71322 314.076 1.65152Z"/></svg>
+    <div class="event-tag">IBM FlashSystem — Nueva Generación</div>
+    <h1>Casos de Uso<br><span>por Industria</span></h1>
+    <p class="subtitle">Argumentos de conversación para CIO/CTO y Gerentes de TI. Úsalos durante el evento para conectar la presentación con la realidad de cada invitado.</p>
+  </div>
+</header>
+
+<div class="grid">
+
+  <!-- MANUFACTURA -->
+  <div class="card card-manufactura">
+    <div class="card-header">
+      <div class="industry-icon">🏭</div>
+      <div class="card-header-text">
+        <div class="industry-label">Manufactura / Industria</div>
+        <div class="card-title">Cero tolerancia al downtime en planta</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="pain-block">
+        <div class="pain-label">Pain point principal</div>
+        <div class="pain-text">"Cada minuto que los sistemas ERP o MES están caídos, la línea de producción se detiene. Un incidente de ransomware nos dejó 18 horas sin operar el año pasado."</div>
+      </div>
+
+      <div class="cases-label">Casos de uso FlashSystem</div>
+
+      <div class="case-item">
+        <span class="case-tag tag-resil">Resiliencia</span>
+        <div class="case-content">
+          <div class="case-title">Recuperación ante ransomware en minutos</div>
+          <div class="case-desc">SafeGuarded Copy crea snapshots inmutables del almacenamiento. Si un ataque cifra los datos de producción, el rollback puede hacerse en menos de 4 horas, sin pagar rescate.</div>
+        </div>
+      </div>
+
+      <div class="case-item">
+        <span class="case-tag tag-speed">Velocidad</span>
+        <div class="case-content">
+          <div class="case-title">ERP / MES sin cuellos de botella de I/O</div>
+          <div class="case-desc">Latencia por debajo de 70 microsegundos elimina los tiempos de espera en consultas de inventario en tiempo real y cierre de turnos en SAP/Oracle.</div>
+        </div>
+      </div>
+
+      <div class="case-item">
+        <span class="case-tag tag-cost">Costo</span>
+        <div class="case-content">
+          <div class="case-title">Consolidación de almacenamiento de planta</div>
+          <div class="case-desc">Reemplazar múltiples arreglos de SAN heredados con un solo FlashSystem reduce el footprint físico, el consumo eléctrico y el costo de administración hasta en un 40%.</div>
+        </div>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi">
+          <div class="kpi-number">&lt;4h</div>
+          <div class="kpi-desc">Recuperación ante ransomware</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">70µs</div>
+          <div class="kpi-desc">Latencia máxima garantizada</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">40%</div>
+          <div class="kpi-desc">Reducción de costo operativo</div>
+        </div>
+      </div>
+
+      <div class="convo-block">
+        <div class="convo-label">Pregunta detonadora en mesa</div>
+        <div class="convo-text">"Cuando IBM muestre la demo de SafeGuarded Copy, <strong>¿cuántas horas tardó el último incidente que tuvieron en recuperar la operación?</strong> Con FlashSystem ese tiempo se mide en minutos, no en días."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANCA / FINANZAS -->
+  <div class="card card-banca">
+    <div class="card-header">
+      <div class="industry-icon">🏦</div>
+      <div class="card-header-text">
+        <div class="industry-label">Banca / Finanzas</div>
+        <div class="card-title">Transacciones a velocidad de mercado</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="pain-block">
+        <div class="pain-label">Pain point principal</div>
+        <div class="pain-text">"El regulador nos exige continuidad operativa 99.999%. Un milisegundo de latencia extra en core bancario puede significar miles de transacciones rechazadas y una multa de la CNBV."</div>
+      </div>
+
+      <div class="cases-label">Casos de uso FlashSystem</div>
+
+      <div class="case-item">
+        <span class="case-tag tag-resil">Resiliencia</span>
+        <div class="case-content">
+          <div class="case-title">Alta disponibilidad para core bancario</div>
+          <div class="case-desc">HyperSwap garantiza failover transparente en menos de 180 segundos sin pérdida de datos, cumpliendo los requisitos de RTO/RPO exigidos por la CNBV y Banxico.</div>
+        </div>
+      </div>
+
+      <div class="case-item">
+        <span class="case-tag tag-speed">Velocidad</span>
+        <div class="case-content">
+          <div class="case-title">Procesamiento de transacciones de alto volumen</div>
+          <div class="case-desc">Hasta 4M de IOPS por sistema permite soportar picos de fin de mes, quincena y campañas de Buen Fin sin degradar el tiempo de respuesta de cajeros y banca digital.</div>
+        </div>
+      </div>
+
+      <div class="case-item">
+        <span class="case-tag tag-ops">Operaciones</span>
+        <div class="case-content">
+          <div class="case-title">Simplificación para cumplimiento regulatorio</div>
+          <div class="case-desc">IBM Storage Insights provee reportes automáticos de capacidad, rendimiento y eventos para auditorías regulatorias, reduciendo el trabajo manual del equipo de TI.</div>
+        </div>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi">
+          <div class="kpi-number">99.999%</div>
+          <div class="kpi-desc">Disponibilidad garantizada</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">4M</div>
+          <div class="kpi-desc">IOPS máximos</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">&lt;180s</div>
+          <div class="kpi-desc">Failover transparente</div>
+        </div>
+      </div>
+
+      <div class="convo-block">
+        <div class="convo-label">Pregunta detonadora en mesa</div>
+        <div class="convo-text">"Cuando IBM presente las capacidades de HyperSwap, <strong>¿cuál es hoy su RTO declarado ante el regulador y cuánto les está costando sostenerlo con su infraestructura actual?</strong>"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SALUD / PHARMA -->
+  <div class="card card-salud">
+    <div class="card-header">
+      <div class="industry-icon">🏥</div>
+      <div class="card-header-text">
+        <div class="industry-label">Salud / Pharma</div>
+        <div class="card-title">Datos clínicos siempre disponibles, siempre seguros</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="pain-block">
+        <div class="pain-label">Pain point principal</div>
+        <div class="pain-text">"Los hospitales son el sector más atacado por ransomware. Si el HIS o el PACS caen, no podemos acceder a expedientes y tenemos que cancelar cirugías. Y los backups tardan horas en restaurar."</div>
+      </div>
+
+      <div class="cases-label">Casos de uso FlashSystem</div>
+
+      <div class="case-item">
+        <span class="case-tag tag-resil">Resiliencia</span>
+        <div class="case-content">
+          <div class="case-title">Protección de expediente clínico electrónico</div>
+          <div class="case-desc">Snapshots inmutables del HIS/EMR cada 15 minutos. En caso de ataque, recuperación limpia en menos de 2 horas, sin afectar la atención a pacientes en urgencias.</div>
+        </div>
+      </div>
+
+      <div class="case-item">
+        <span class="case-tag tag-speed">Velocidad</span>
+        <div class="case-content">
+          <div class="case-title">Imágenes médicas DICOM sin espera</div>
+          <div class="case-desc">Carga de estudios de resonancia y tomografía en menos de 2 segundos desde PACS. Los radiólogos eliminan el tiempo de espera entre paciente y diagnóstico.</div>
+        </div>
+      </div>
+
+      <div class="case-item">
+        <span class="case-tag tag-cost">Costo</span>
+        <div class="case-content">
+          <div class="case-title">Consolidación de almacenamiento clínico y administrativo</div>
+          <div class="case-desc">Un solo sistema para HIS, PACS, laboratorio y administración. Elimina silos de almacenamiento, reduce licencias y simplifica el cumplimiento de NOM-024 y HIPAA.</div>
+        </div>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi">
+          <div class="kpi-number">&lt;2h</div>
+          <div class="kpi-desc">Recuperación ante ataque</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">&lt;2s</div>
+          <div class="kpi-desc">Carga de imagen DICOM</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">60%</div>
+          <div class="kpi-desc">Reducción de silos de almacenamiento</div>
+        </div>
+      </div>
+
+      <div class="convo-block">
+        <div class="convo-label">Pregunta detonadora en mesa</div>
+        <div class="convo-text">"Cuando IBM muestre las capacidades de snapshot inmutable, <strong>¿cuánto tiempo tardarían hoy en restaurar el HIS completo si mañana amanecieran cifrados?</strong> Ese número es el que convence al director general de aprobar el proyecto."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RETAIL -->
+  <div class="card card-retail">
+    <div class="card-header">
+      <div class="industry-icon">🛍️</div>
+      <div class="card-header-text">
+        <div class="industry-label">Retail / Comercio</div>
+        <div class="card-title">Infraestructura que escala con tus temporadas</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="pain-block">
+        <div class="pain-label">Pain point principal</div>
+        <div class="pain-text">"En Buen Fin y Hot Sale nuestra plataforma de e-commerce y el ERP de inventario se saturan. El año pasado perdimos ventas porque el sistema de punto de venta tardaba 8 segundos en procesar cada cobro."</div>
+      </div>
+
+      <div class="cases-label">Casos de uso FlashSystem</div>
+
+      <div class="case-item">
+        <span class="case-tag tag-speed">Velocidad</span>
+        <div class="case-content">
+          <div class="case-title">E-commerce y POS sin degradación en picos</div>
+          <div class="case-desc">El almacenamiento NVMe de FlashSystem absorbe picos de hasta 10x el tráfico normal sin aumentar latencia. El tiempo de respuesta del carrito permanece por debajo de 200ms.</div>
+        </div>
+      </div>
+
+      <div class="case-item">
+        <span class="case-tag tag-resil">Resiliencia</span>
+        <div class="case-content">
+          <div class="case-title">Continuidad en fechas comerciales críticas</div>
+          <div class="case-desc">Replicación síncrona entre sitios garantiza que un fallo de hardware en una ubicación no interrumpe las operaciones de venta durante Buen Fin, Navidad o quincenas.</div>
+        </div>
+      </div>
+
+      <div class="case-item">
+        <span class="case-tag tag-cost">Costo</span>
+        <div class="case-content">
+          <div class="case-title">Reducción del costo por TB almacenado</div>
+          <div class="case-desc">Compresión y deduplicación en línea con ratios de 5:1 en datos de catálogo, imágenes de producto y logs transaccionales. Menos capacidad comprada, mismo rendimiento.</div>
+        </div>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi">
+          <div class="kpi-number">&lt;200ms</div>
+          <div class="kpi-desc">Respuesta en picos de tráfico</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">5:1</div>
+          <div class="kpi-desc">Ratio de compresión de datos</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-number">10x</div>
+          <div class="kpi-desc">Capacidad de absorción de picos</div>
+        </div>
+      </div>
+
+      <div class="convo-block">
+        <div class="convo-label">Pregunta detonadora en mesa</div>
+        <div class="convo-text">"Cuando IBM muestre los números de compresión, <strong>¿cuánto crecieron sus datos el último año y cuánto están pagando por capacidad de almacenamiento adicional?</strong> Con esos datos puedo calcularles el ROI en el evento mismo."</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-note">
+    Preparado para el evento IBM FlashSystem Nueva Generación &nbsp;·&nbsp;
+    <strong>Uso exclusivo del equipo de ventas</strong>
+  </div>
+  <div class="footer-note">
+    Los KPIs son referencias de posicionamiento basadas en especificaciones IBM FlashSystem 7300/9500
+  </div>
+</footer>
+
+</body>
+</html>
