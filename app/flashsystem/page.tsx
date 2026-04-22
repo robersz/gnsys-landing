@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+import { FlashSystemSubscribeForm } from "@/components/FlashSystemSubscribeForm";
 import {
   ArrowRight,
   Calculator,
   Factory,
+  Mail,
+  Phone,
   QrCode,
   ServerCog,
   Sparkles,
+  User,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -153,6 +158,56 @@ export default function FlashSystemLandingPage() {
               </Link>
             );
           })}
+        </div>
+
+        <div className="mt-10 rounded-[28px] border border-cyan-400/20 bg-white/[0.04] p-7 backdrop-blur-xl">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300/80">
+            Mantente al día
+          </p>
+          <h2 className="mb-2 text-xl font-semibold text-white">
+            Suscríbete para recibir más herramientas como esta a tu correo.
+          </h2>
+          <p className="mb-6 text-sm text-slate-400">
+            Te enviaremos recursos exclusivos sobre infraestructura, almacenamiento y tendencias tecnológicas.
+          </p>
+          <Suspense fallback={null}>
+            <FlashSystemSubscribeForm />
+          </Suspense>
+        </div>
+
+        <div className="mt-6 rounded-[28px] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+          <div className="flex flex-col items-center text-center gap-3 mb-5">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-cyan-200">
+              <User className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300/80">Contacto GNSYS</p>
+              <p className="text-base font-semibold text-white">Joel de Zamacona</p>
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-6">
+            <a
+              href="tel:+528115387130"
+              className="inline-flex items-center gap-2 text-sm text-slate-300 transition hover:text-cyan-300"
+            >
+              <Phone className="h-4 w-4 text-cyan-400/70" />
+              +52 811 538 7130
+            </a>
+            <a
+              href="tel:+528183477640"
+              className="inline-flex items-center gap-2 text-sm text-slate-300 transition hover:text-cyan-300"
+            >
+              <Phone className="h-4 w-4 text-cyan-400/70" />
+              (81) 8347 7640
+            </a>
+            <a
+              href="mailto:zamacona@gnsys.com.mx"
+              className="inline-flex items-center gap-2 text-sm text-slate-300 transition hover:text-cyan-300"
+            >
+              <Mail className="h-4 w-4 text-cyan-400/70" />
+              zamacona@gnsys.com.mx
+            </a>
+          </div>
         </div>
 
       </section>
