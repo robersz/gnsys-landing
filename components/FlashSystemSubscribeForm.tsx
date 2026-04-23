@@ -36,23 +36,15 @@ export function FlashSystemSubscribeForm() {
 
   return (
     <form
-      action="https://crm.zoho.com/crm/WebToLeadForm"
+      action="https://formspree.io/f/xkokkbwr"
       method="POST"
-      acceptCharset="UTF-8"
       onSubmit={handleSubmit}
       className="flex flex-col gap-3 sm:flex-row sm:items-end sm:flex-wrap"
     >
-      {/* Tokens de seguridad Zoho */}
-      <input type="hidden" name="xnQsjsdp" value="91d0d978fc0d18965dd85a0e642cbba8ec4dddba86c3770f3533ce2ac7082044" />
-      <input type="hidden" name="zc_gad" id="zc_gad_subscribe" value="" />
-      <input type="hidden" name="xmIwtLD" value="d643b366830df7ed2a53d353f530c74f3eb393878b7b4663e37653a3da48aecfacd04d7d296f86ed1c688bc740ff9d42" />
-      <input type="hidden" name="actionType" value="TGVhZHM=" />
-      <input type="hidden" name="returnURL" value="https://gnsys.com.mx/flashsystem?suscrito=1" />
+      <input type="hidden" name="_next" value="https://gnsys.com.mx/flashsystem?suscrito=1" />
 
-      {/* Honeypot */}
-      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }} aria-hidden="true">
-        <input type="text" name="aG9uZXlwb3Q" tabIndex={-1} autoComplete="off" defaultValue="" />
-      </div>
+      {/* Honeypot nativo de Formspree */}
+      <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
       <div className="flex-1 min-w-[160px]">
         <label htmlFor="sub_first_name" className="mb-1.5 block text-xs font-medium text-slate-400">
