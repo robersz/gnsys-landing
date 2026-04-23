@@ -5,7 +5,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const defaultContentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
-  "form-action 'self' https://crm.zoho.com",
+  "form-action 'self' https://crm.zoho.com https://formspree.io",
   "frame-ancestors 'self'",
   "object-src 'none'",
   "img-src 'self' data: https://*.googleapis.com https://*.gstatic.com https://www.google.com https://maps.google.com https://maps.gstatic.com",
@@ -13,7 +13,7 @@ const defaultContentSecurityPolicy = [
   // TODO: Replace unsafe-inline with nonces once a CSP nonce strategy is in place.
   "style-src 'self' 'unsafe-inline'",
   `script-src 'self' 'unsafe-inline'${isProduction ? "" : " 'unsafe-eval'"}`,
-  "connect-src 'self'",
+  "connect-src 'self' https://formspree.io",
   "frame-src https://www.google.com https://maps.google.com https://maps.gstatic.com https://maps.googleapis.com",
   isProduction ? "upgrade-insecure-requests" : null,
 ]
